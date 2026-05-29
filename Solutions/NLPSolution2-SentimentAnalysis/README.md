@@ -29,7 +29,7 @@ Sentiment Analysis(SA) is a [natural language processing](https://en.wikipedia.o
 - In this project, we'll show how to efficiently convert, deploy and acclerate [MobileBERT-SST2](https://huggingface.co/Alireza1044/mobilebert_sst2) model on Snapdragon to perform Ondevice Sentiment Analysis.
 
 ## Prerequisites
-* Android Studio to import and build the project
+* Android Studio Dolphin Version 2021.3.1 to import and build the project
 
 * Qualcomm® Neural Processing Engine for AI SDK v2.x.x and its [dependencies](https://docs.qualcomm.com/bundle/publicresource/topics/80-63442-2/setup.html?product=1601111740010412) to integrate and accelerate the network on Snapdragon<br>
 
@@ -40,6 +40,13 @@ pip install tensorflow==2.10.1
 pip install transformers==4.35.2 tokenizers==0.14.1 regex==2023.10.3
 pip install sacrebleu==2.3.1 colorama
 ```
+
+## List of Supported Devices
+
+- Snapdragon 8 Elite Gen5 (SM8850) - NPU Version: V81
+- Snapdragon 8 Elite Gen4 (SM8750) - NPU Version: V79
+- Snapdragon 8 Gen3 (SM8650) - NPU Version: V75
+- Snapdragon 8 Gen2 (SM8550) - NPU Version: V73
 
 ## Quick Start
 

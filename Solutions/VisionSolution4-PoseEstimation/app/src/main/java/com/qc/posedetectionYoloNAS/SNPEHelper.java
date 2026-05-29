@@ -46,9 +46,9 @@ public class SNPEHelper {
 
         int success_count = tt.split("success", -1).length -1;
 
-        if(success_count>=1)  //TODO to be changed for both models
+        if(success_count>=2)
         {
-            System.out.println("Atleast 1 model is build");
+            System.out.println("Both models built successfully");
             return true;
         }
         return false;

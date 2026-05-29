@@ -1,17 +1,20 @@
 # HRNET pose-estimation
-The project is designed to utilize the <b>Qualcomm® Neural Processing SDK for AI </b>, a deep learning software from Snapdragon platforms for Pose Detection in Android. The Android application can be designed to use any built-in/connected camera to capture the objects and use Machine Learning model to get the pose of any human present in the camera feed. This solution uses two opensource models to achieve better accuracy on Human Pose Estimation. We use YoloNAS_SSD to identify each person in a frame and then give this data to HRNET model to get pose estimation on the previously identified person.
+The project is designed to utilize the <b>Qualcomm® AI Runtime (QAIRT) for AI </b>, a deep learning software from Snapdragon platforms for Pose Detection in Android. The Android application can be designed to use any built-in/connected camera to capture the objects and use Machine Learning model to get the pose of any human present in the camera feed. This solution uses two opensource models to achieve better accuracy on Human Pose Estimation. We use YoloNAS_SSD to identify each person in a frame and then give this data to HRNET model to get pose estimation on the previously identified person.
 
 
 # Pre-requisites
 
-* Before starting the Android application, please follow the instructions for setting up Qualcomm Neural Processing SDK using the link provided. https://docs.qualcomm.com/bundle/publicresource/topics/80-63442-2/setup.html?product=1601111740010412
+* Before starting the Android application, please follow the instructions for setting up QAIRT SDK using the link provided. https://docs.qualcomm.com/bundle/publicresource/topics/80-63442-2/setup.html?product=1601111740010412
+* Android Studio Panda 4 Version 2025.3.4 to import and build the project
 * Android device 6.0 and above which uses below mentioned Snapdragon processors/Snapdragon HDK with display can be used to test the application 
-* Download CocoDataset 2017 and give its path to Generate_DLC.ipynb. Change variable "dataset_path" during Quantization for both models.
+* Download Dataset and give its path to Generate_DLC.ipynb. Change variable "dataset_path" during Quantization for both models.
 
 ## List of Supported Devices
 
-- Snapdragon® SM8550
-- Snapdragon® SM8650
+- Snapdragon 8 Elite Gen5 (SM8850) - NPU Version: V81
+- Snapdragon 8 Elite Gen4 (SM8750) - NPU Version: V79
+- Snapdragon 8 Gen3 (SM8650) - NPU Version: V75
+- Snapdragon 8 Gen2 (SM8550) - NPU Version: V73
 
 The above targets supports the application with CPU, GPU and DSP. For more information on the supported devices, please follow this link https://docs.qualcomm.com/bundle/publicresource/topics/80-63442-2/overview.html?product=1601111740010412
   

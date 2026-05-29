@@ -21,8 +21,8 @@ package com.qc.posedetectionYoloNAS;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.RadioGroup;
@@ -51,27 +51,23 @@ public class MainActivity extends AppCompatActivity {
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.CPU:
+                if (checkedId == R.id.CPU) {
                         runtime_var = 'C';
                         overToCamera(runtime_var);
                         System.out.println("CPU instance running");
-                        break;
-                    case R.id.GPU:
+                    } else if (checkedId == R.id.GPU) {
                         runtime_var = 'G';
                         overToCamera(runtime_var);
                         System.out.println("GPU instance running");
-                        break;
-                    case R.id.DSP:
+                    } else if (checkedId == R.id.DSP) {
                         runtime_var = 'D';
                         overToCamera(runtime_var);
                         System.out.println("DSP instance running");
-                        break;
-                    default:
+                    } else {
                         runtime_var = 'N';
                         overToCamera(runtime_var);
                         System.out.println("Do Nothing");
-                }
+                    }
             }
         });
 

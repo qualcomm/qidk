@@ -5,15 +5,16 @@ The project is designed to utilize the Qualcomm® Neural Processing SDK for AI, 
 # Pre-requisites
 
 * Before starting the Android application, please follow the instructions for setting up [Qualcomm Neural Processing SDK](https://docs.qualcomm.com/bundle/publicresource/topics/80-63442-2/setup.html?product=1601111740010412)
+* Android Studio Dolphin Version 2021.3.1 to import and build the project
 * Android device 6.0 and above which uses below mentioned Snapdragon processors/Snapdragon HDK with display can be used to test the application
 * Download dataset of your choice and give its path in Generate_DLC.ipynb. Change variable "dataset_path" in Quantization Section in notebook.
 
 ## List of Supported Devices
 
-- Snapdragon® 8 Elite Gen 5 <sm8850>
-- Snapdragon® 8 Elite <sm8750>
-- Snapdragon® 8 Gen 3 <sm8650>
-- Snapdragon® 8 Gen 2 <sm8550>
+- Snapdragon 8 Elite Gen5 (SM8850) - NPU Version: V81
+- Snapdragon 8 Elite Gen4 (SM8750) - NPU Version: V79
+- Snapdragon 8 Gen3 (SM8650) - NPU Version: V75
+- Snapdragon 8 Gen2 (SM8550) - NPU Version: V73
 
 The above targets supports the application with CPU, GPU and DSP. 
 For more information on the supported devices, please follow this link https://docs.qualcomm.com/bundle/publicresource/topics/80-63442-50/backend.html?product=1601111740009302

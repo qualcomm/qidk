@@ -33,8 +33,15 @@ Automatic Speech Recognition (ASR) is one of the common and challenging Natural 
 </p>
 
 ## Prerequisites
-* Android Studio to import and build the project
+* Android Studio Dolphin Version 2021.3.1 to import and build the project
 * Set up for <b>Qualcomm® Neural Processing SDK for AI</b> 
+
+## List of Supported Devices
+
+- Snapdragon 8 Elite Gen5 (SM8850) - NPU Version: V81
+- Snapdragon 8 Elite Gen4 (SM8750) - NPU Version: V79
+- Snapdragon 8 Gen3 (SM8650) - NPU Version: V75
+- Snapdragon 8 Gen2 (SM8550) - NPU Version: V73
   
 ## Quick Start
 

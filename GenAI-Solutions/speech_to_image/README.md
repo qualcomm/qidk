@@ -51,7 +51,7 @@ export QNN_SDK_ROOT=<path to QAIRT SDK>
 - Python 3.10
 
 ## Tools
-- Download [Android Studio](https://developer.android.com/studio/archive). **App is tested with Version 2024.3.1.
+- Download [Android Studio](https://developer.android.com/studio/archive). **App is tested with Android Studio Meerkat Version 2024.3.1.**
 
 ## Setup and Compilation Instructions
 ### Compiling dependencies

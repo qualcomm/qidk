@@ -257,7 +257,11 @@ float*** execcomb(cv::Mat &img, int orig_width, int orig_height, int &numberofhu
     //LOGI("execute_net_BB");
     mtx.lock();
     //ATrace_beginSection("BB time");
-    assert(snpe_BB!=nullptr);
+    if (snpe_BB == nullptr) {
+        LOGE("BB model not initialized");
+        mtx.unlock();
+        return nullptr;
+    }
 
     gettimeofday(&start_time, NULL);
 
@@ -267,9 +271,6 @@ float*** execcomb(cv::Mat &img, int orig_width, int orig_height, int &numberofhu
         mtx.unlock();
         return nullptr;
     }
-
-    std::string name_out_boxes = "885";
-    std::string name_out_classes = "877";
 
     bool execStatus = snpe_BB->execute(inputMap, outputMap);
     if(execStatus== true){
@@ -281,11 +282,30 @@ float*** execcomb(cv::Mat &img, int orig_width, int orig_height, int &numberofhu
         return nullptr;
     }
 
-
-    std::vector<float32_t> BBout_boxcoords = applicationOutputBuffers.at(name_out_boxes);
-//    LOGI("BBout_boxcoords: %f %f %f %f ",BBout_boxcoords[0], BBout_boxcoords[1], BBout_boxcoords[2], BBout_boxcoords[3]);
-
-    std::vector<float32_t> BBout_class = applicationOutputBuffers.at(name_out_classes);
+    // Identify YoloNAS outputs dynamically by tensor size:
+    //   boxes tensor:   smaller  (2100 x 4)
+    //   classes tensor: larger   (2100 x 80)
+    std::vector<float32_t> BBout_boxcoords;
+    std::vector<float32_t> BBout_class;
+    for (auto& kv : applicationOutputBuffers) {
+        LOGI("YoloNAS output tensor: %s size: %zu", kv.first.c_str(), kv.second.size());
+        if (BBout_boxcoords.empty() && BBout_class.empty()) {
+            BBout_boxcoords = kv.second; // tentative first
+        } else {
+            // assign smaller to boxes, larger to classes
+            if (kv.second.size() < BBout_boxcoords.size()) {
+                BBout_class = BBout_boxcoords;
+                BBout_boxcoords = kv.second;
+            } else {
+                BBout_class = kv.second;
+            }
+        }
+    }
+    if (BBout_boxcoords.empty() || BBout_class.empty()) {
+        LOGE("Failed to identify YoloNAS output tensors");
+        mtx.unlock();
+        return nullptr;
+    }
 //    LOGI("BBout_class: %f",BBout_class[0]);
 
     std::vector<BoxCornerEncoding> Boxlist;
@@ -352,9 +372,6 @@ float*** execcomb(cv::Mat &img, int orig_width, int orig_height, int &numberofhu
                 return nullptr;
             }
 
-            std::string name_output_heatmap = "output";
-            std::vector<float32_t> myoutput = applicationOutputBuffers_pose.at(name_output_heatmap);
-
             //ATrace_endSection();
             //ATrace_beginSection("Inference time HRNET");
 
@@ -382,7 +399,16 @@ float*** execcomb(cv::Mat &img, int orig_width, int orig_height, int &numberofhu
                 mtx.unlock();
                 return nullptr;
             }
-            std::vector<float32_t> outpose_heatmap = applicationOutputBuffers_pose.at(name_output_heatmap);
+            // HRNet has a single output tensor — use it directly without hardcoding the name
+            if (applicationOutputBuffers_pose.empty()) {
+                LOGE("HRNet output buffer is empty");
+                mtx.unlock();
+                return nullptr;
+            }
+            LOGI("HRNet output tensor: %s size: %zu",
+                 applicationOutputBuffers_pose.begin()->first.c_str(),
+                 applicationOutputBuffers_pose.begin()->second.size());
+            std::vector<float32_t> outpose_heatmap = applicationOutputBuffers_pose.begin()->second;
 
             //LOGI("outpose_heatmap.size(): %d",outpose_heatmap.size());
 

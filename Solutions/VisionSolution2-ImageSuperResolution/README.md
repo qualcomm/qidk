@@ -14,9 +14,16 @@
 ### Pre-Requisites 
 
 - Qualcomm® Neural Processing SDK for AI setup should be completed by following the guide here : https://docs.qualcomm.com/bundle/publicresource/topics/80-63442-2/setup.html?product=1601111740010412
-- Android Studio to import sample project
+- Android Studio Dolphin Version 2021.3.1 to import sample project
 - Android NDK to build native code
 - Install opencv using ```pip install opencv-python```
+
+## List of Supported Devices
+
+- Snapdragon 8 Elite Gen5 (SM8850) - NPU Version: V81
+- Snapdragon 8 Elite Gen4 (SM8750) - NPU Version: V79
+- Snapdragon 8 Gen3 (SM8650) - NPU Version: V75
+- Snapdragon 8 Gen2 (SM8550) - NPU Version: V73
 
 # Model Selection, and DLC conversion
 

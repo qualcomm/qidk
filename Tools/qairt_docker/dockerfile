@@ -1,0 +1,93 @@
+FROM ubuntu:22.04
+
+LABEL maintainer="https://www.qualcomm.com/"
+LABEL version="0.1"
+LABEL description="Ubunutu 22.04 Docker image to be the base for QNN SDK"
+
+# qairt_version is read by run_qairt_docker.sh to detect when a rebuild is needed.
+# Update this label whenever the QAIRT SDK version below is changed.
+ARG QAIRT_VERSION=2.46.0.260424
+LABEL qairt_version=${QAIRT_VERSION}
+
+RUN apt-get update && apt-get install -y software-properties-common gcc && \
+    add-apt-repository -y ppa:deadsnakes/ppa
+
+
+RUN apt-get install -y python3.10-venv python3-pip git wget unzip make file adb nano vim
+RUN python3 -m venv /usr/venv
+RUN chmod -R 777 /usr/venv
+RUN python3 -m pip install --upgrade pip
+RUN . /usr/venv/bin/activate && pip3 --no-cache-dir install pip-tools wheel rich jupyter
+RUN . /usr/venv/bin/activate && pip3 --no-cache-dir install --no-deps tensorflow==2.10.1 tflite==2.3.0
+RUN . /usr/venv/bin/activate && pip3 --no-cache-dir install --no-deps torch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cpu
+
+# Remove torch C++ include headers (only needed to build PyTorch extensions from
+# source, not for model conversion or inference). Saves ~1.5GB.
+RUN rm -rf /usr/venv/lib/python3.10/site-packages/torch/include \
+    && rm -rf /usr/venv/lib/python3.10/site-packages/torch/share
+
+RUN . /usr/venv/bin/activate && pip3 --no-cache-dir install --no-deps protobuf==3.19.6 onnx==1.16.1 onnx-simplifier==0.4.36
+
+RUN . /usr/venv/bin/activate && pip3 --no-cache-dir install --no-deps pycocotools==2.0.6 transformers sacrebleu==2.3.1 \
+	sentencepiece scikit-learn
+
+EXPOSE 8080
+EXPOSE 5037
+RUN echo 'alias python='python3''>>~/.bashrc
+RUN apt install -y sudo
+
+# Download and install QAIRT SDK automatically.
+# The zip extracts as: qairt/<top_dir>/<version>/ — use find to locate the directory
+# that contains bin/ and set the symlink to that exact path.
+# Docs are removed immediately to keep the image layer small (~1GB saved).
+RUN mkdir -p /Tools/qairt_docker \
+    && wget https://softwarecenter.qualcomm.com/api/download/software/sdks/Qualcomm_AI_Runtime_Community/All/2.46.0.260424/v2.46.0.260424.zip \
+        -O /tmp/qairt_sdk.zip \
+    && unzip /tmp/qairt_sdk.zip -d /Tools/qairt_docker/qairt \
+    && rm /tmp/qairt_sdk.zip \
+    && SDK_BIN=$(find /Tools/qairt_docker/qairt -maxdepth 4 -type d -name "bin" | head -1) \
+    && ln -s "$(dirname ${SDK_BIN})" /Tools/qairt_docker/qairt/current \
+    && rm -rf /Tools/qairt_docker/qairt/current/docs
+ENV QAIRT_SDK_ROOT=/Tools/qairt_docker/qairt/current
+
+# Download and install Android NDK automatically.
+# Remove large unused components: python3 bundled toolchain, simpleperf, C++ STL sources.
+RUN mkdir -p /Tools/qairt_docker/android_ndk \
+    && wget https://dl.google.com/android/repository/android-ndk-r26c-linux.zip \
+        -O /tmp/android-ndk-r26c-linux.zip \
+    && unzip /tmp/android-ndk-r26c-linux.zip -d /Tools/qairt_docker/android_ndk \
+    && rm /tmp/android-ndk-r26c-linux.zip \
+    && rm -rf /Tools/qairt_docker/android_ndk/android-ndk-r26c/toolchains/llvm/prebuilt/linux-x86_64/python3 \
+    && rm -rf /Tools/qairt_docker/android_ndk/android-ndk-r26c/simpleperf \
+    && rm -rf /Tools/qairt_docker/android_ndk/android-ndk-r26c/sources/cxx-stl
+ENV ANDROID_NDK_ROOT=/Tools/qairt_docker/android_ndk/android-ndk-r26c
+
+COPY ./setup_env.sh /setup_env.sh
+
+RUN chmod +x /setup_env.sh
+
+# Install QAIRT SDK Python requirements explicitly (check-python-dependency only
+# reports missing packages; it does not install them).
+RUN . /usr/venv/bin/activate && \
+    if [ -f ${QAIRT_SDK_ROOT}/requirements.txt ]; then \
+        pip3 --no-cache-dir install -r ${QAIRT_SDK_ROOT}/requirements.txt; \
+    fi && \
+    pip3 --no-cache-dir install onnxruntime==1.16.1
+
+# Install QAIRT SDK Linux requirements explicitly (check-linux-dependency.sh does
+# install apt packages, but running it here ensures it happens cleanly at build time).
+RUN if [ -f ${QAIRT_SDK_ROOT}/bin/check-linux-dependency.sh ]; then \
+        bash ${QAIRT_SDK_ROOT}/bin/check-linux-dependency.sh; \
+    fi
+
+# Run full one-time setup at build time (QAIRT_SDK_ROOT and ANDROID_NDK_ROOT are
+# already set above as ENV vars, so no prompts are triggered).
+# This runs envsetup, envcheck, and writes the marker file so that
+# every subsequent "docker exec ... /bin/bash" activates the env instantly.
+RUN bash /setup_env.sh
+
+# .bashrc was written by setup_env.sh; ensure it sources setup_env.sh on shell open.
+RUN grep -qxF '. /setup_env.sh' ~/.bashrc || echo '. /setup_env.sh' >> ~/.bashrc
+
+RUN apt-get update && apt-get install -y ncurses-term && rm -rf /var/lib/apt/lists/*
+ENV TERM=xterm

@@ -16,7 +16,7 @@ accelerate LLMs using the Snapdragon NPU.
 
 ### Tools and SDK
 
-- Download [Android Studio](https://developer.android.com/studio/archive). **App is tested with Version 2024.3.1.
+- Download [Android Studio](https://developer.android.com/studio/archive). **App is tested with Android Studio Meerkat Version 2024.3.1.**
 
 
 ### Download LLM Model from AI HUB

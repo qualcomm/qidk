@@ -4,6 +4,7 @@ The project is designed to utilize the [Qualcomm® AI Engine Direct](https://doc
 # Pre-requisites
 
 * Qualcomm® AI Engine Direct setup should be completed by following the guide [here](https://docs.qualcomm.com/bundle/publicresource/topics/80-63442-50/setup.html)
+* Android Studio Dolphin Version 2021.3.1 to import and build the project
 * Install onnx and onnxruntime using `pip install onnx onnxruntime`
 * Android device 6.0 and above can be used to test the application
 * Download CocoDataset 2014.
@@ -11,10 +12,10 @@ The project is designed to utilize the [Qualcomm® AI Engine Direct](https://doc
 
 ## List of Supported Devices
 
-- Snapdragon® 8 Elite Gen 5 <sm8850>
-- Snapdragon® 8 Elite <sm8750>
-- Snapdragon® 8 Gen 3 <sm8650>
-- Snapdragon® 8 Gen 2 <sm8550>
+- Snapdragon 8 Elite Gen5 (SM8850) - NPU Version: V81
+- Snapdragon 8 Elite Gen4 (SM8750) - NPU Version: V79
+- Snapdragon 8 Gen3 (SM8650) - NPU Version: V75
+- Snapdragon 8 Gen2 (SM8550) - NPU Version: V73
 
 The above targets supports the application with CPU and DSP.
 

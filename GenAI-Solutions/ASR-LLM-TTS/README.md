@@ -14,7 +14,7 @@
 
 ## Prerequisite
 -  Download QAIRT-2.43 version from QPM.
-- Android Studio [link](https://developer.android.com/studio/).
+- Android Studio Meerkat Version 2024.3.1 ([link](https://developer.android.com/studio/archive)).
 
 ## Quick Links
 - 📌 **ASR**: [ASR_Readme](readme_assets/asr_Readme.md)  
