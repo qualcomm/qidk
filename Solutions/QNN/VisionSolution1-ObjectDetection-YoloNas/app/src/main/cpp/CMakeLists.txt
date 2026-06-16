@@ -43,7 +43,6 @@ add_library( # Sets the name of the library.
         src/inference.cpp src/objectdetectionYoloNas.cpp include/Model.h src/QnnSampleApp.cpp include/QnnTypeMacros.hpp src/QnnWrapperUtils.cpp Utils/DataUtil.cpp Log/Logger.cpp Log/LogUtils.cpp PAL/src/common/GetOpt.cpp PAL/src/common/StringOp.cpp PAL/src/linux/Directory.cpp PAL/src/linux/DynamicLoading.cpp PAL/src/linux/FileOp.cpp PAL/src/linux/Path.cpp Utils/DynamicLoadUtil.cpp Utils/IOTensor.cpp Utils/QnnSampleAppUtils.cpp
         src/YOLONAS_Model.cpp include/YOLONAS_Model.h
         src/SSDMobileNetV2_Model.cpp include/SSDMobileNetV2_Model.h
-        src/YOLO_X_Model.cpp include/YOLO_X_Model.h
         Utils/DynamicLoadUtil.cpp
         Log/Logger.cpp)
 

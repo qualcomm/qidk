@@ -37,9 +37,9 @@ import android.hardware.camera2.TotalCaptureResult;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.TextureView;
@@ -63,7 +63,7 @@ import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
-import android.support.v4.app.DialogFragment;
+import androidx.fragment.app.DialogFragment;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.widget.Toast;
@@ -1087,7 +1087,6 @@ public class CameraFragment extends Fragment
                                        @NonNull CaptureRequest request,
                                        @NonNull TotalCaptureResult result) {
             long frameNo = result.getFrameNumber();
-            System.out.println("vdebug framenumber : " + frameNo);
             frame_count += 1;
             if (mNetworkLoaded) {
                 try {
@@ -1148,7 +1147,6 @@ public class CameraFragment extends Fragment
                     });
                 }
             }
-            System.out.println("vdebug framenumber : " + frameNo + "ended");
         }
 
         @Override

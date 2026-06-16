@@ -4,49 +4,42 @@
  * All Rights Reserved.
  * Confidential and Proprietary - Qualcomm Technologies, Inc.
 -->
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center_horizontal">
 
-    <FrameLayout
-        android:id="@+id/main_content"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="YOLO NAS Object Detection"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="40dp"/>
+
+    <!-- Runtime selection row -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="24dp">
 
         <TextView
-            android:id="@+id/textViewNew1"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_alignParentLeft="true"
-            android:text="Select model : "
-            android:textSize="18dp"
-            />
-        <Spinner
-            android:id="@+id/spinnerNew1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_gravity="right"
-            android:layout_toRightOf="@+id/textViewNew1"
-            />
-
-        <TextView
-            android:id="@+id/tvNew1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:text="Select Runtime"
-            android:textSize="18dp" />
+            android:layout_weight="1"
+            android:text="Select Runtime :"
+            android:textSize="16sp"/>
 
         <RadioGroup
             android:id="@+id/rg1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:layout_gravity="right"
-            android:layout_toRightOf="@+id/tvNew1"
             android:orientation="horizontal">
 
             <RadioButton
@@ -60,34 +53,40 @@
                 android:id="@+id/DSP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DSP" />
+                android:text="DSP"/>
         </RadioGroup>
+    </LinearLayout>
 
-        <!-- Performance profile: only shown when DSP is selected -->
+    <!-- Performance profile row: only shown when DSP is selected -->
+    <LinearLayout
+        android:id="@+id/perf_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="40dp"
+        android:visibility="gone">
+
         <TextView
             android:id="@+id/tv_dropdown_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="75dp"
-            android:layout_alignParentLeft="true"
-            android:text="Select performance : "
-            android:textSize="18dp"
-            android:visibility="gone"/>
+            android:text="Select performance :"
+            android:textSize="16sp"
+            android:layout_gravity="start"
+            android:paddingBottom="8dp"/>
 
         <Spinner
             android:id="@+id/options_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="75dp"
-            android:layout_gravity="right"
-            android:layout_toRightOf="@+id/tv_dropdown_label"
-            android:visibility="gone"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
-            android:text="Start Camera"
-            android:onClick="startManinCameraActivity"/>
-    </FrameLayout>
-</RelativeLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        android:text="Start Camera"
+        android:onClick="startManinCameraActivity"/>
+
+</LinearLayout>

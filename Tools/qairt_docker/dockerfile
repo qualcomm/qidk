@@ -6,7 +6,7 @@ LABEL description="Ubunutu 22.04 Docker image to be the base for QNN SDK"
 
 # qairt_version is read by run_qairt_docker.sh to detect when a rebuild is needed.
 # Update this label whenever the QAIRT SDK version below is changed.
-ARG QAIRT_VERSION=2.46.0.260424
+ARG QAIRT_VERSION=2.47.0.260601
 LABEL qairt_version=${QAIRT_VERSION}
 
 RUN apt-get update && apt-get install -y software-properties-common gcc && \
@@ -41,7 +41,7 @@ RUN apt install -y sudo
 # that contains bin/ and set the symlink to that exact path.
 # Docs are removed immediately to keep the image layer small (~1GB saved).
 RUN mkdir -p /Tools/qairt_docker \
-    && wget https://softwarecenter.qualcomm.com/api/download/software/sdks/Qualcomm_AI_Runtime_Community/All/2.46.0.260424/v2.46.0.260424.zip \
+    && wget https://softwarecenter.qualcomm.com/api/download/software/sdks/Qualcomm_AI_Runtime_Community/All/2.47.0.260601/v2.47.0.260601.zip \
         -O /tmp/qairt_sdk.zip \
     && unzip /tmp/qairt_sdk.zip -d /Tools/qairt_docker/qairt \
     && rm /tmp/qairt_sdk.zip \

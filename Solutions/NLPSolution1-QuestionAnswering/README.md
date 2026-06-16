@@ -7,14 +7,14 @@
   2. [Model and DLC Validation](#2-model-and-dlc-validation)
   3. [Ondevice Profiling](#3-ondevice-performance-profiling)
   4. [Build and Run with Android Studio](#4-build-and-run-with-android-studio)
-- [Qualcomm® Neural Processing SDK C++ APIs JNI Integration](#qualcomm-neural-processing-sdk-c-apis-jni-integration)
+- [Qualcomm AI Runtime (QAIRT) SDK C++ APIs JNI Integration](#qualcomm-neural-processing-sdk-c-apis-jni-integration)
 - [Credits](#credits)
 - [References](#references)
 
 ## Introduction
 
 Question Answering (QA) is one of the common and challenging Natural Language Processing tasks. <br>
-- Current project is an sample Android application for OnDevice Question Ansering based on [ICLR 2020 Electra](https://openreview.net/pdf?id=r1xMH1BtvB) Transformer model acclerated using Qualcomm® Neural Processing SDK for AI framework.
+- Current project is an sample Android application for OnDevice Question Ansering based on [ICLR 2020 Electra](https://openreview.net/pdf?id=r1xMH1BtvB) Transformer model acclerated using Qualcomm AI Runtime for AI framework.
 
 - Model used in this project is : https://huggingface.co/mrm8488/electra-small-finetuned-squadv2 
 
@@ -27,9 +27,9 @@ Question Answering (QA) is one of the common and challenging Natural Language Pr
 </p>
 
 ## Prerequisites
-* Android Studio Dolphin Version 2021.3.1 to import and build the project
+* Android Studio Panda 4 Version 2025.3.4 to import and build the project
 
-* [Qualcomm® Neural Processing Engine for AI SDK] v2.x.x and its [dependencies](https://docs.qualcomm.com/bundle/publicresource/topics/80-63442-2/setup.html?product=1601111740010412) to integrate and accelerate the network on Snapdragon<br>
+* Setup Docker environment by following the instructions in [Tools/qairt_docker](../../Tools/qairt_docker/README.md)
 
 * Ensure the following dependencies are included to download and use the model
 ```
@@ -37,6 +37,7 @@ pip install --upgrade pip setuptools
 pip install tensorflow==2.10.1
 pip install transformers==4.35.2 tokenizers==0.14.1 regex==2023.10.3
 pip install sacrebleu==2.3.1 colorama
+pip install "numpy<2"
 ```
 
 ## List of Supported Devices
@@ -57,12 +58,9 @@ python scripts/qa_model_gen.py
 ```
 Model will get generated at `./frozen_models` directory with name `electra_small_squad2.pb` having input Sequence_Length = `384` <br>
 <br>
-#### 1.2 Setup the Qualcomm® Neural Processing SDK Environment:
-```
-source <snpe-sdk-location>/bin/envsetup.sh -t $TENSORFLOW_DIR
-```
 
-#### 1.3 Convert generated frozen graph into DLC (Deep Learning Container):
+
+#### 1.2 Convert generated frozen graph into DLC (Deep Learning Container):
 ```
 snpe-tensorflow-to-dlc -i frozen_models/electra_small_squad2.pb -d input_ids 1,384 -d attention_mask 1,384 -d token_type_ids 1,384 --out_node Identity --out_node Identity_1 -o frozen_models/electra_small_squad2.dlc
 ```
@@ -72,7 +70,7 @@ This command converts Tensorflow frozen graph into DLC format, which DSP, GPU An
 ###### <i>(If you are using a different Tensorflow version to generate PB file, it may be a case that Output Layer names gets changed. Please check once by visualizing graph using Netron viewer or any other visualization tools )</i> <br>
 
 
-#### 1.4 Offline Preparation (caching) of DLC (for optimizing model loading time on DSP accelerator, for 8750 use --htp_archs v79, for 8850 use --htp_archs v81)
+#### 1.3 Offline Preparation (caching) of DLC (for optimizing model loading time on DSP accelerator, for 8750 use --htp_archs v79, for 8850 use --htp_archs v81)
 ```
 snpe-dlc-graph-prepare --input_dlc frozen_models/electra_small_squad2.dlc --use_float_io --htp_archs v79 --set_output_tensors Identity:0,Identity_1:0
 ```
@@ -139,7 +137,7 @@ best_f1_thresh = 0.0
 
 #### 2.3 Validating generated Electra-small DLC on DSP runtime:
 ```
- python $SNPE_ROOT/benchmarks/SNPE/snpe_bench.py -c dsp_accuracy_test.json -t android-aarch64 -p burst -z
+ python $QAIRT_SDK_ROOT/benchmarks/SNPE/snpe_bench.py -c dsp_accuracy_test.json -t android-aarch64 -p burst -z
 ```
 This command will push DLC, SDK assets and Input artifacts on connected device and auto-run inference on DSP runtime.
 ```
@@ -172,7 +170,7 @@ total = 50
 
 ### 3. OnDevice Performance Profiling:
 ```
- python $SNPE_ROOT/benchmarks/snpe_bench.py -c ondevice_perf_test.json -t android-aarch64 -p burst -z
+ python $QAIRT_SDK_ROOT/benchmarks/snpe_bench.py -c ondevice_perf_test.json -t android-aarch64 -p burst -z
 ```
 This command will push DLC, SDK assets and Input artifacts on connected device and auto-run inference on DSP, GPU_FP16 and CPU runtimes.<br>
 On-completion, benchmarking results will be stored at : `dOut/results/latest_results/benchmark_stats_dOut.csv`
@@ -192,7 +190,7 @@ To understand benchmark fields in CSV file please refer to "CSV Benchmark Result
 ### 4. Build and run with Android Studio
 
 #### Add AI SDK libs and generated DLC into app assets, jniLibs and cmakeLibs directory:
-Make sure `SNPE_ROOT` env variable is set
+Make sure `QAIRT_SDK_ROOT` env variable is set
 ```
 ./scripts/fetch_snpe_assets.sh
 ```
@@ -249,9 +247,9 @@ Following is the basic Question Answering Android App.
 </p>
 
 
-## Qualcomm® Neural Processing SDK C++ APIs JNI Integration
+## Qualcomm AI Runtime (QAIRT) SDK C++ APIs JNI Integration
 
-Please refer to SDK Native application tutorial : https://docs.qualcomm.com/bundle/publicresource/topics/80-63442-2/cplus_plus_tutorial.html?product=1601111740010412
+Please refer to SDK Native application tutorial : https://docs.qualcomm.com/doc/80-63442-10/topic/general_overview.html
 
 ## Credits
 
@@ -275,4 +273,4 @@ tokenizer with Electra-small model.
 
 
 
-###### *Qualcomm Neural Processing SDK is a product of Qualcomm Technologies, Inc. and/or its subsidiaries.*
+###### *Qualcomm AI Runtime (QAIRT) and Snapdragon are products of Qualcomm Technologies, Inc. and/or its subsidiaries.

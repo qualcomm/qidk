@@ -27,8 +27,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     static Map<Character, String> runtime_name=new HashMap<Character, String>();
 
-    static final String[] modeloptions = {"YOLONAS", "YoloX"};
+    static final String[] modeloptions = {"YOLONAS"};
 
     static final char[] runtimeoptions = {'C', 'D'};
 
@@ -53,11 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     Map<String, String> model_name = new HashMap<String, String>() {{
         put("libyolo_nas_w8a8.so", modeloptions[0]);
-        //put("libyolo_nas_w8a8.so", modeloptions[0]);
-        //put("yolo_nas_w8a8.serialized.bin", modeloptions[0]);
         put("libyolo_nas_w8a8_dsp.so", modeloptions[0]);
-        put("libyolox_a8w8_2_15_1.so", modeloptions[1]);
-        put("yolox_a8w8_2_15_1.serialized.bin", modeloptions[1]);
     }};
 
     Map<Character, String> backend = new HashMap<Character, String>() {{
@@ -67,15 +63,11 @@ public class MainActivity extends AppCompatActivity {
 
     static final String[] runtimename = {"CPU", "DSP"};
 
-    static final String[] classcount = {"80", "80"};
+    static final String[] classcount = {"80"};
 
-    Map<String, String> class_count=new HashMap<String, String>() {{
+    Map<String, String> class_count = new HashMap<String, String>() {{
         put("libyolo_nas_w8a8.so", classcount[0]);
-        //put("libyolo_nas_w8a8.so", classcount[0]);
-        //put("yolo_nas_w8a8.serialized.bin", classcount[0]);
         put("libyolo_nas_w8a8_dsp.so", classcount[0]);
-        put("libyolox_a8w8_2_15_1.so", classcount[1]);
-        put("yolox_a8w8_2_15_1.serialized.bin", classcount[1]);
     }};
 
     static {

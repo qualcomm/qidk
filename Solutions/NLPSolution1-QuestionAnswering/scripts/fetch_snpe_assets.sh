@@ -8,7 +8,7 @@
 
 #Copy SNPE header to App CPP include directory
 mkdir -p QuestionAnswering/bert/src/main/cpp/inc/zdl
-cp -R $SNPE_ROOT/include/SNPE/* QuestionAnswering/bert/src/main/cpp/inc/zdl/ 
+cp -R $QAIRT_SDK_ROOT/include/SNPE/* QuestionAnswering/bert/src/main/cpp/inc/zdl/ 
 
 # Add DLC to App asssets dir
 cp ./frozen_models/electra_small_squad2_cached.dlc ./QuestionAnswering/bert/src/main/assets/
@@ -18,21 +18,21 @@ cp ./frozen_models/electra_small_squad2_cached.dlc ./QuestionAnswering/bert/src/
 # Add SNPE ARM64 libs to App 'cmakeLibs' and 'jniLibs'
 mkdir -p ./QuestionAnswering/bert/src/main/cmakeLibs/arm64-v8a
 mkdir -p ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a
-cp $SNPE_ROOT/lib/aarch64-android/libSNPE.so ./QuestionAnswering/bert/src/main/cmakeLibs/arm64-v8a/.
-cp $SNPE_ROOT/lib/aarch64-android/libSNPE.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
-cp $SNPE_ROOT/lib/aarch64-android/libSnpeHtpPrepare.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
-cp $SNPE_ROOT/lib/aarch64-android/libSnpeHtpV69Stub.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
-cp $SNPE_ROOT/lib/aarch64-android/libSnpeHtpV73Stub.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
-cp $SNPE_ROOT/lib/aarch64-android/libSnpeHtpV75Stub.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
-cp $SNPE_ROOT/lib/aarch64-android/libSnpeHtpV79Stub.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
-cp $SNPE_ROOT/lib/aarch64-android/libSnpeHtpV81Stub.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
+cp $QAIRT_SDK_ROOT/lib/aarch64-android/libSNPE.so ./QuestionAnswering/bert/src/main/cmakeLibs/arm64-v8a/.
+cp $QAIRT_SDK_ROOT/lib/aarch64-android/libSNPE.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
+cp $QAIRT_SDK_ROOT/lib/aarch64-android/libSnpeHtpPrepare.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
+cp $QAIRT_SDK_ROOT/lib/aarch64-android/libSnpeHtpV69Stub.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
+cp $QAIRT_SDK_ROOT/lib/aarch64-android/libSnpeHtpV73Stub.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
+cp $QAIRT_SDK_ROOT/lib/aarch64-android/libSnpeHtpV75Stub.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
+cp $QAIRT_SDK_ROOT/lib/aarch64-android/libSnpeHtpV79Stub.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
+cp $QAIRT_SDK_ROOT/lib/aarch64-android/libSnpeHtpV81Stub.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
 
 # Add SNPE DSP libs to App 'jniLibs'
-cp $SNPE_ROOT/lib/hexagon-v69/unsigned/libSnpeHtpV69Skel.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
-cp $SNPE_ROOT/lib/hexagon-v73/unsigned/libSnpeHtpV73Skel.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
-cp $SNPE_ROOT/lib/hexagon-v75/unsigned/libSnpeHtpV75Skel.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
-cp $SNPE_ROOT/lib/hexagon-v79/unsigned/libSnpeHtpV79Skel.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
-cp $SNPE_ROOT/lib/hexagon-v79/unsigned/libSnpeHtpV81Skel.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
+cp $QAIRT_SDK_ROOT/lib/hexagon-v69/unsigned/libSnpeHtpV69Skel.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
+cp $QAIRT_SDK_ROOT/lib/hexagon-v73/unsigned/libSnpeHtpV73Skel.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
+cp $QAIRT_SDK_ROOT/lib/hexagon-v75/unsigned/libSnpeHtpV75Skel.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
+cp $QAIRT_SDK_ROOT/lib/hexagon-v79/unsigned/libSnpeHtpV79Skel.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
+cp $QAIRT_SDK_ROOT/lib/hexagon-v81/unsigned/libSnpeHtpV81Skel.so ./QuestionAnswering/bert/src/main/jniLibs/arm64-v8a/.
 
 
 # Validate if all libs are copied

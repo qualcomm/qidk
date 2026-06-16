@@ -1,17 +1,29 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
+    ext.kotlin_version = '2.0.21'
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:7.0.1"
-
+        classpath 'com.android.tools.build:gradle:8.5.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
 
-task clean(type: Delete) {
+tasks.register('clean', Delete) {
     delete rootProject.buildDir
+}
+
+// Android Studio's Kotlin IDE plugin requests prepareKotlinBuildScriptModel during
+// Gradle sync for all subprojects. Register it as a no-op for pure Java modules
+// that don't apply the Kotlin Gradle Plugin.
+subprojects {
+    afterEvaluate { project ->
+        if (!project.tasks.names.contains('prepareKotlinBuildScriptModel')) {
+            project.tasks.register('prepareKotlinBuildScriptModel')
+        }
+    }
 }

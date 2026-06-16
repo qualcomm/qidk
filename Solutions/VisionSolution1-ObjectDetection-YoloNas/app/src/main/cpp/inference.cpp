@@ -207,8 +207,26 @@ bool executeDLC(cv::Mat &img, int orig_width, int orig_height, int &numberofobj,
         return false;
     }
 
-    std::string name_out_boxes = "885";
-    std::string name_out_classes =  "877";
+    std::string name_out_boxes;
+    std::string name_out_classes;
+
+    // Buffer sizes are in bytes (bufSize = num_elements * sizeof(float)).
+    // Boxes: 2100*4*4=33600 bytes. Classes: 2100*80*4=672000 bytes.
+    for (const auto &kv : applicationOutputBuffers) {
+        LOGE("Output tensor: '%s'  size: %zu", kv.first.c_str(), kv.second.size());
+        if (kv.second.size() == 2100 * 4 * sizeof(float32_t)) {
+            name_out_boxes = kv.first;
+        } else if (kv.second.size() == 2100 * 80 * sizeof(float32_t)) {
+            name_out_classes = kv.first;
+        }
+    }
+
+    if (name_out_boxes.empty() || name_out_classes.empty()) {
+        LOGE("Could not identify output tensors. boxes='%s' classes='%s'. Check tensor sizes above.",
+             name_out_boxes.c_str(), name_out_classes.c_str());
+        mtx.unlock();
+        return false;
+    }
 
     ATrace_endSection();
     gettimeofday(&start_time, NULL);
@@ -240,7 +258,7 @@ bool executeDLC(cv::Mat &img, int orig_width, int orig_height, int &numberofobj,
     std::vector<std::string> Classlist;
 
     //Post Processing
-    for(int i =0;i<(2100);i++)  //TODO change value of 2100 to soft value
+    for(int i =0;i<(2100);i++)
     {
         int start = i*80;
         int end = (i+1)*80;

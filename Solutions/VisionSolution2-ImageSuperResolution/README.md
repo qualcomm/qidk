@@ -2,7 +2,7 @@
 
 ### About "Image Super Resolution" 
 
-- Current project is an sample Android application for AI-based Image Super Resolution using <b>Qualcomm® Neural Processing SDK for AI </b> framework. 
+- Current project is an sample Android application for AI-based Image Super Resolution using <b>Qualcomm® AI Runtime (QAIRT)</b> framework. 
 - Model used in this sample is : **Collapsible Linear Blocks for Super-Efficient Super Resolution** (*https://arxiv.org/abs/2103.09404*)
 - SESR model is also part of AIMET Model Zoo (*https://github.com/quic/aimet-model-zoo/#pytorch-model-zoo*)
 - This sample enhances input image resolution by 4x along width, and height. If input resolution is wxh, output resolution will be 4*w x 4*h
@@ -13,9 +13,8 @@
 
 ### Pre-Requisites 
 
-- Qualcomm® Neural Processing SDK for AI setup should be completed by following the guide here : https://docs.qualcomm.com/bundle/publicresource/topics/80-63442-2/setup.html?product=1601111740010412
-- Android Studio Dolphin Version 2021.3.1 to import sample project
-- Android NDK to build native code
+- Setup Docker environment by following the instructions in [Tools/qairt_docker](../../Tools/qairt_docker/README.md)
+- Android Studio Panda 4 Version 2025.3.4
 - Install opencv using ```pip install opencv-python```
 
 ## List of Supported Devices
@@ -60,7 +59,7 @@ Source : *https://arxiv.org/pdf/2103.09404.pdf*
 
 - <DIR> demo: Contains demo video, GIF 
 - <DIR> doc: Contains documentation/images for current project
-- <DIR> snpe-release: Contains SDK release binary. It is recommended to ** regenerate DLC and replace the SDK release binary **  if there is a significant change in SDK release over time
+- <DIR> snpe-release: Contains QAIRT SDK release binary. It is recommended to ** regenerate DLC and replace the SDK release binary **  if there is a significant change in SDK release over time
 - <DIR> superresolution: Contains source files in standard Android app format.
 
 ### Code Implementation
@@ -134,20 +133,22 @@ you need to release the model after you are done with it.<br/>
     superResolution.freeNetwork();
 ```
 
-# Build and run with Android Studio
+# Build and run with Android Studio Panda 4 Version 2025.3.4
 
 ## Build APK file with Android Studio 
 
 1. Clone QIDK repo. 
-2. Generate DLC using the steps mentioned above (super_resolution_sesr_opt.dlc)
-3. Copy "snpe-release.aar" file from android folder in "Qualcomm Neural Processing SDK for AI" release from Qualcomm Developer Network into this folder : VisionSolution2-ImageSuperResolution\snpe-release\
-   Command: cp $SNPE_ROOT/lib/android/snpe-release.aar snpe-release
-4. Copy DLC generated from the notebook at : VisionSolution2-ImageSuperResolution\superresolution\src\main\assets\ (super_resolution_sesr_opt.dlc)
-   Command: cp -R Genarate_Model/models/*.dlc ./superresolution/src/main/assets/
-5. Import folder VisionSolution2-ImageSuperResolution as a project in Android Studio 
-6. Compile the project. 
-7. Output APK file should get generated : superresolution-debug.apk
-8. Prepare the Qualcomm Innovators development kit to install the application (Do not run APK on emulator)
+
+2. Use the Generate_Model/sesr.ipynb notebook to generate the DLC (sesr_w8a8.dlc) and 
+   resolve all necessary dependencies.
+
+3. Import folder VisionSolution2-ImageSuperResolution as a project in Android Studio 
+
+4. Compile the project. 
+
+5. Output APK file should get generated : superresolution-debug.apk
+
+6. Prepare the Qualcomm Innovators development kit to install the application
 
 If Unsigned or Signed DSP runtime is not getting detected, then please check the logcat logs for the FastRPC error. DSP runtime may not get detected due to SE Linux security policy. Please try out following commands to set permissive SE Linux policy.
 ```java
@@ -158,13 +159,13 @@ adb remount
 adb shell setenforce 0
 ```
 
-9. Install and test application : superresolution-debug.apk
+7. Install and test application : superresolution-debug.apk
 
 ```java
 adb install -r -t superresolution-debug.apk
 ```
 
-10. launch the application
+8. launch the application
 
 Following is the basic "Image Super Resolution" Android App 
 
@@ -187,4 +188,4 @@ Same results for the application are shown below
     2. SESR at AIMET model zoo - https://github.com/quic/aimet-model-zoo/#pytorch-model-zoo
 
 
-###### *Qualcomm Neural Processing SDK and Snapdragon are products of Qualcomm Technologies, Inc. and/or its subsidiaries. AIMET Model Zoo is a product of Qualcomm Innovation Center, Inc.*
+###### *Qualcomm AI Runtime (QAIRT) and Snapdragon are products of Qualcomm Technologies, Inc. and/or its subsidiaries. AIMET Model Zoo is a product of Qualcomm Innovation Center, Inc.*

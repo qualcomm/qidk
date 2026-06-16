@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.qcom.aistack_objdetect">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera2" />
     <!--<uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />-->
     <application
         android:configChanges="orientation|screenSize"
-        android:extractNativeLibs="true"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,7 +16,10 @@
 
         <uses-native-library
             android:name="libcdsprpc.so"
-            android:required="true"/>
+            android:required="false" />
+        <uses-native-library
+            android:name="libOpenCL.so"
+            android:required="false" />
 
 
         <activity android:name="com.qcom.aistack_objdetect.HomeScreenActivity"

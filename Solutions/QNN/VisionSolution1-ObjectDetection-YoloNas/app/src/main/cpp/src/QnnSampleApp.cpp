@@ -520,10 +520,6 @@ sample_app::StatusCode copyFromFloatToNative(float* floatBuffer,
     std::vector<size_t> dims;
     fillDims(dims, QNN_TENSOR_GET_DIMENSIONS(tensor), QNN_TENSOR_GET_RANK(tensor));
 
-    for(int i = 0;i<dims.size();i++)
-    {
-        __android_log_print(ANDROID_LOG_ERROR, "QNN ", "******************************************************************** input dims = %lu\n >>>>",dims[i]);
-    }
     switch (QNN_TENSOR_GET_DATA_TYPE(tensor)) {
         case QNN_DATATYPE_UFIXED_POINT_8:
             __android_log_print(ANDROID_LOG_ERROR, "QNN ","ufp8\n");
@@ -643,7 +639,7 @@ sample_app::StatusCode copyFromFloatToNative(float* floatBuffer,
 // inputs from input_list based files and writes output to .raw files.
 sample_app::StatusCode sample_app::QnnSampleApp::executeGraphs(float32_t* input_buffer,cv::Mat output_buffer[2],std::vector<size_t> output_dims[2]) {
   auto returnStatus = StatusCode::SUCCESS;
-  __android_log_print(ANDROID_LOG_ERROR, "QNN ", "execute is running\n");
+  __android_log_print(ANDROID_LOG_DEBUG, "QNN ", "execute is running\n");
   __android_log_print(ANDROID_LOG_ERROR, "QNN ", "graphs = %d\n",m_graphsCount);
 
   for (size_t graphIdx = 0; graphIdx < m_graphsCount; graphIdx++) {
@@ -671,11 +667,6 @@ sample_app::StatusCode sample_app::QnnSampleApp::executeGraphs(float32_t* input_
           if (m_inputDataType == iotensor::InputDataType::FLOAT &&
               QNN_TENSOR_GET_DATA_TYPE(inputs) != QNN_DATATYPE_FLOAT_32) {
             float32_t * fileToBuffer = input_buffer;
-            for(int i=0;i<10;i++)
-            {
-              __android_log_print(ANDROID_LOG_ERROR, "QNN ", " before buffer[%d] = %f\n",i,fileToBuffer[i]);
-            }
-            __android_log_print(ANDROID_LOG_ERROR, "QNN ", "##############################################\n");
 
             returnStatus = copyFromFloatToNative(reinterpret_cast<float32_t *>(fileToBuffer), inputs); // Copy uint8_t* image to input
           }
@@ -693,10 +684,6 @@ sample_app::StatusCode sample_app::QnnSampleApp::executeGraphs(float32_t* input_
 
 
       float32_t * bufferToWrite0 = reinterpret_cast<float32_t*>(QNN_TENSOR_GET_CLIENT_BUF(outputs).data);
-        for(int i=0;i<10;i++)
-        {
-          __android_log_print(ANDROID_LOG_ERROR, "QNN ", "before output buffer[%d] = %f\n",i,bufferToWrite0[i]);
-        }
         ///////////
         if (StatusCode::SUCCESS == returnStatus) {
           Qnn_ErrorHandle_t executeStatus = QNN_GRAPH_NO_ERROR;
@@ -720,7 +707,7 @@ sample_app::StatusCode sample_app::QnnSampleApp::executeGraphs(float32_t* input_
           }
 
           ///////////////////////TODO
-//              returnStatus =returnStatus = convertAndWriteOutputTensorInFloat(
+//        returnStatus =returnStatus = convertAndWriteOutputTensorInFloat(
 //          &(outputs[outputIdx]), outputPaths, outputFile, outputBatchSize);
 
 
@@ -882,42 +869,35 @@ sample_app::StatusCode sample_app::QnnSampleApp::executeGraphs(float32_t* input_
               QNN_ERROR("failure in convertToFloat");
               return StatusCode::FAILURE;
           }
-            float32_t* bufferToWrite = reinterpret_cast<float32_t*>(floatBuffer);
+
+          float32_t* bufferToWrite = reinterpret_cast<float32_t*>(floatBuffer);
 //            datautil::writeBatchDataToFile(
 //                    outputPaths, fileName, dims, QNN_DATATYPE_FLOAT_32, bufferToWrite, outputBatchSize))
 
           //////////////////////////////
-            size_t length = elementCount * sizeof(float32_t);
-            __android_log_print(ANDROID_LOG_ERROR, "QNN ", "after output length = %d\n",length);
+          size_t length = elementCount * sizeof(float32_t);
+          __android_log_print(ANDROID_LOG_DEBUG, "QNN ", "after output length = %d\n",length);
+          __android_log_print(ANDROID_LOG_ERROR, "QNN ", "Number of outputTensors = %d\n",  graphInfo.numOutputTensors);
 
-
-          //////////////////////////////
-            for(int i=0;i<10;i++)
-            {
-              __android_log_print(ANDROID_LOG_ERROR, "QNN ", "after output buffer[%d] = %f\n",i,bufferToWrite[i]);
-            }
-
-            __android_log_print(ANDROID_LOG_ERROR, "QNN ", "Number of outputTensors = %d\n",  graphInfo.numOutputTensors);
-
-            std::string outputFilePrefix;
-            if (nullptr != QNN_TENSOR_GET_NAME(outputs[outputIdx]) &&
-                strlen(QNN_TENSOR_GET_NAME(outputs[outputIdx])) > 0) {
+          std::string outputFilePrefix;
+          if (nullptr != QNN_TENSOR_GET_NAME(outputs[outputIdx]) &&
+              strlen(QNN_TENSOR_GET_NAME(outputs[outputIdx])) > 0) {
               outputFilePrefix = std::string(QNN_TENSOR_GET_NAME(outputs[outputIdx]));
-            }
+          }
 
-            //output_buffer[outputIdx]  = cv::Mat(output_dims[outputIdx][1], output_dims[outputIdx][2], CV_32FC1, reinterpret_cast<uchar*>(bufferToWrite));
-            output_buffer[outputIdx] = cv::Mat(output_dims[outputIdx][1], output_dims[outputIdx][2], CV_32FC1);
-            if (bufferToWrite != nullptr) {
-                if (output_buffer[outputIdx].data == nullptr) {
-                    __android_log_print(ANDROID_LOG_ERROR, "QNN ", "mat.data is NULL\n");
-                    break;
-                }
+          //output_buffer[outputIdx]  = cv::Mat(output_dims[outputIdx][1], output_dims[outputIdx][2], CV_32FC1, reinterpret_cast<uchar*>(bufferToWrite));
+          output_buffer[outputIdx] = cv::Mat(output_dims[outputIdx][1], output_dims[outputIdx][2], CV_32FC1);
+          if (bufferToWrite != nullptr) {
+             if (output_buffer[outputIdx].data == nullptr) {
+                 __android_log_print(ANDROID_LOG_ERROR, "QNN ", "mat.data is NULL\n");
+                 break;
+             }
 
-                std::memcpy(output_buffer[outputIdx].ptr<float32_t>(), static_cast<float32_t*>(bufferToWrite),
-                            output_dims[outputIdx][1] * output_dims[outputIdx][2] * sizeof(float32_t));
+             std::memcpy(output_buffer[outputIdx].ptr<float32_t>(), static_cast<float32_t*>(bufferToWrite),
+                         output_dims[outputIdx][1] * output_dims[outputIdx][2] * sizeof(float32_t));
 
-                free(bufferToWrite);
-            }
+             free(bufferToWrite);
+          }
 
       }
           //////////////////
@@ -943,16 +923,13 @@ sample_app::StatusCode sample_app::QnnSampleApp::executeGraphs(float32_t* input_
 sample_app::StatusCode sample_app::QnnSampleApp::deinitialize() {
   auto returnStatus = StatusCode::SUCCESS;
   // Free Profiling object if it was created
-  __android_log_print(ANDROID_LOG_ERROR, "QNN ", "vdebug deinitialize --- start\n");
   if (m_graphsInfo) {
-    __android_log_print(ANDROID_LOG_ERROR, "QNN ", "vdebug freeGraphInfoFnHandle\n");
     m_qnnFunctionPointers.freeGraphInfoFnHandle(&m_graphsInfo, m_graphsCount);
     m_graphsInfo = nullptr;
     m_graphsCount = 0;
   }
 
   if (nullptr != m_profileBackendHandle) {
-    __android_log_print(ANDROID_LOG_ERROR, "QNN ", "vdebug Freeing backend profile object\n");
     if (QNN_PROFILE_NO_ERROR !=
        m_qnnFunctionPointers.qnnInterface.profileFree(m_profileBackendHandle)) {
        //LOGE("Could not free backend profile handle.");
@@ -963,7 +940,6 @@ sample_app::StatusCode sample_app::QnnSampleApp::deinitialize() {
 
   if (m_isContextCreated) {
     //  LOGI("Freeing context");
-    __android_log_print(ANDROID_LOG_ERROR, "QNN ", "vdebug Freeing context\n");
     if (QNN_CONTEXT_NO_ERROR !=
         m_qnnFunctionPointers.qnnInterface.contextFree(m_context, nullptr)) {
        //LOGE("Could not free context");
@@ -974,7 +950,6 @@ sample_app::StatusCode sample_app::QnnSampleApp::deinitialize() {
   // Terminate backend
   if (m_isBackendInitialized && nullptr != m_qnnFunctionPointers.qnnInterface.backendFree) {
     //  LOGI("Freeing backend");
-    __android_log_print(ANDROID_LOG_ERROR, "QNN ", "vdebug backendFree\n");
 
     if (QNN_BACKEND_NO_ERROR != m_qnnFunctionPointers.qnnInterface.backendFree(m_backendHandle)) {
       //LOGE("Could not free backend");
@@ -984,7 +959,6 @@ sample_app::StatusCode sample_app::QnnSampleApp::deinitialize() {
 
   // Terminate logging in the backend
   if (nullptr != m_qnnFunctionPointers.qnnInterface.logFree && nullptr != m_logHandle) {
-    __android_log_print(ANDROID_LOG_ERROR, "QNN ", "vdebug logFree\n");
     if (QNN_SUCCESS != m_qnnFunctionPointers.qnnInterface.logFree(m_logHandle)) {
        //LOGW("Unable to terminate logging in the backend.");
     }
@@ -998,7 +972,6 @@ sample_app::StatusCode sample_app::QnnSampleApp::deinitialize() {
     }
   }
 
-  __android_log_print(ANDROID_LOG_ERROR, "QNN ", "vdebug deinitialize --- end\n");
 
   return returnStatus;
 }

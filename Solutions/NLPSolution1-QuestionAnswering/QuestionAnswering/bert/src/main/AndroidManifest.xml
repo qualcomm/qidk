@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.qualcomm.qti">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
         android:allowBackup="true"
@@ -15,11 +14,11 @@
 
         <uses-native-library
             android:name="libcdsprpc.so"
-            android:required="true" />
+            android:required="false" />
 
         <uses-native-library
             android:name="libOpenCL.so"
-            android:required="true" />
+            android:required="false" />
 
         <activity
             android:name="com.qualcomm.qti.qa.ui.QaActivity"

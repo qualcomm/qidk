@@ -37,30 +37,24 @@ public class SNPEActivity extends AppCompatActivity {
     Spinner spin;
     String[] options = {"No Selection","Sample1.jpg","Sample2.jpg"}; //Image filenames on which model inference is made
     protected void executeRadioButton(int checkedId) {
-        switch (checkedId) {
-            case R.id.rb1:
-                // set text for your textview here
-                System.out.println("CPU instance running");
-                result = process(bmps, "CPU");
-                txt4.setText("CPU inference time : " + result.getInferenceTime() + "milli sec");
-                imageView2.setImageBitmap(result.getResults().get(0).getHighResolutionImages()[0]);
-                break;
-            case R.id.rb2:
-                // set text for your textview here
-                System.out.println("GPU instance running");
-                result = process(bmps, "GPU");
-                txt4.setText("GPU inference time : " + result.getInferenceTime() + "milli sec");
-                imageView2.setImageBitmap(result.getResults().get(0).getHighResolutionImages()[0]);
-                break;
-            case R.id.rb3:
-                System.out.println("DSP instance running");
-                System.out.println("Device runtime " + "DSP");
-                result = process(bmps, "DSP");
-                txt4.setText("DSP inference time : " + result.getInferenceTime() + "milli sec");
-                imageView2.setImageBitmap(result.getResults().get(0).getHighResolutionImages()[0]);
-                break;
-            default:
-                System.out.println("Do Nothing");
+        if (checkedId == R.id.rb1) {
+            System.out.println("CPU instance running");
+            result = process(bmps, "CPU");
+            txt4.setText("CPU inference time : " + result.getInferenceTime() + "milli sec");
+            imageView2.setImageBitmap(result.getResults().get(0).getHighResolutionImages()[0]);
+        } else if (checkedId == R.id.rb2) {
+            System.out.println("GPU instance running");
+            result = process(bmps, "GPU");
+            txt4.setText("GPU inference time : " + result.getInferenceTime() + "milli sec");
+            imageView2.setImageBitmap(result.getResults().get(0).getHighResolutionImages()[0]);
+        } else if (checkedId == R.id.rb3) {
+            System.out.println("DSP instance running");
+            System.out.println("Device runtime " + "DSP");
+            result = process(bmps, "DSP");
+            txt4.setText("DSP inference time : " + result.getInferenceTime() + "milli sec");
+            imageView2.setImageBitmap(result.getResults().get(0).getHighResolutionImages()[0]);
+        } else {
+            System.out.println("Do Nothing");
         }
     }
     @Override

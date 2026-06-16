@@ -126,11 +126,11 @@ public class MainActivity extends AppCompatActivity {
         String uiLogger = "";
         TextView tv = binding.textView;
         TextView tv_ip = binding.textViewForPrediction;
-        Button predictDSP = findViewById(R.id.button);
-        Button predictCPU = findViewById(R.id.button2);
-        EditText inputEditText = findViewById(R.id.editTextUserInput);
-        ProgressBar Pos = findViewById(R.id.progressBar );
-        ProgressBar Neg = findViewById(R.id.progressBar2);
+        Button predictDSP = binding.button;
+        Button predictCPU = binding.button2;
+        EditText inputEditText = binding.editTextUserInput;
+        ProgressBar Pos = binding.progressBar;
+        ProgressBar Neg = binding.progressBar2;
 
         uiLogger += queryRuntimes(nativeDirPath);
         tv.setText(uiLogger);

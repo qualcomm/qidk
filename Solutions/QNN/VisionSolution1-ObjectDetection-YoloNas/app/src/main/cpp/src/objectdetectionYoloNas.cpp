@@ -12,7 +12,6 @@
 
 #include "../include/YOLONAS_Model.h"
 #include "../include/SSDMobileNetV2_Model.h"
-#include "../include/YOLO_X_Model.h"
 #include <opencv2/imgproc/types_c.h>
 #include "../include/inference.h"
 
@@ -128,10 +127,7 @@ Java_com_qcom_aistack_1objdetect_QNNHelper_initQNN(JNIEnv *env, jobject thiz, jo
     //LOGE("Model env 1 = %s", *cstr);
 
     //Changing PrePost for different models
-    if(strcmp(cstr,"yolox_a8w8_2_15_1.serialized.bin")==0 || strcmp(cstr,"libyolox_a8w8_2_15_1.so")==0){
-        modelobj = new YOLO_X_Model();
-    }
-    else if(strcmp(cstr,"yolo_nas_w8a8.serialized.bin")==0 || strcmp(cstr,"libyolo_nas_w8a8_dsp.so")==0 || strcmp(cstr,"libyolo_nas_w8a8.so")==0){
+    if(strcmp(cstr,"yolo_nas_w8a8.serialized.bin")==0 || strcmp(cstr,"libyolo_nas_w8a8_dsp.so")==0 || strcmp(cstr,"libyolo_nas_w8a8.so")==0){
         modelobj = new YOLONAS_Model();
     }
     else if(strcmp(cstr,"ssd_mobilenetV2_without_ABP-NMS_a8w8.serialized.bin")==0 || strcmp(cstr,"libssd_mobilenetV2_without_ABP-NMS_a8w8.so")==0){

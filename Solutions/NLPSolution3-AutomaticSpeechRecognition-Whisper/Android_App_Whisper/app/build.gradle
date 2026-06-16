@@ -5,18 +5,13 @@ plugins {
 
 android {
     namespace 'com.example.automatic_speech_recognition'
-    compileSdkVersion 34
-//    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdk 34
     defaultConfig {
-        //ndkVersion "25.1.8937393"
-        ndkVersion "23.1.7779620"
-//        ndkVersion '21.4.7075529'
-
+        ndkVersion '26.1.10909125'
 
         applicationId "com.example.automatic_speech_recognition"
         minSdkVersion 30
-        targetSdkVersion 30
+        targetSdkVersion 34
         versionCode 3
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -30,11 +25,6 @@ android {
             }
 
         }
-        compileOptions {
-            sourceCompatibility JavaVersion.VERSION_1_8
-            targetCompatibility JavaVersion.VERSION_1_8
-        }
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         sourceSets {
             main {
@@ -42,13 +32,20 @@ android {
             }
         }
 
-
     }
-    packagingOptions {
-        pickFirst 'lib/x86/libc++_shared.so'
-        pickFirst 'lib/x86_64/libc++_shared.so'
-        pickFirst 'lib/arm64-v8a/libc++_shared.so'
-        pickFirst 'lib/armeabi-v7a/libc++_shared.so'
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+            pickFirsts += [
+                'lib/x86/libc++_shared.so',
+                'lib/x86_64/libc++_shared.so',
+                'lib/arm64-v8a/libc++_shared.so',
+                'lib/armeabi-v7a/libc++_shared.so'
+            ]
+        }
+        resources {
+            excludes += ['lib/x86_64/libnative-lib.so']
+        }
     }
 
 
@@ -59,19 +56,15 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    packagingOptions {
-        // exclude 'lib/armeabi-v7a/libnative-lib.so'
-        exclude 'lib/x86_64/libnative-lib.so'
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     externalNativeBuild {
         cmake {
             path file('src/main/cpp/CMakeLists.txt')
         }
     }
-    lintOptions {
+    lint {
         abortOnError false
     }
 
@@ -79,45 +72,28 @@ android {
 
 dependencies {
 
-
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     // Dependency on local binaries
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13.2'
     testImplementation 'androidx.test:core:1.5.0'
     testImplementation 'com.google.truth:truth:1.0'
     testImplementation 'org.robolectric:robolectric:4.3.1'
-    androidTestImplementation 'androidx.test:runner:1.5.2'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test:runner:1.6.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 
     // Gson library
-    implementation 'com.google.code.gson:gson:2.9.0'
-    implementation 'com.google.guava:guava:28.1-android'
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'com.google.guava:guava:33.3.1-android'
 
-    // Import the GPU delegate plugin Library for GPU inference
-    implementation 'org.tensorflow:tensorflow-lite:2.9.0'
-
-    implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly-SNAPSHOT'
-    // This dependency adds the necessary TF op support.
+    // TensorFlow Lite for decoder inference
+    implementation 'org.tensorflow:tensorflow-lite:2.14.0'
     implementation 'org.tensorflow:tensorflow-lite-select-tf-ops:2.14.0'
 
-    implementation 'com.google.code.gson:gson:2.8.5'
-    implementation 'com.google.guava:guava:28.1-android'
-
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'androidx.test:core:1.2.0'
-    testImplementation 'com.google.truth:truth:1.0'
-    testImplementation 'org.robolectric:robolectric:4.3.1'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
-
 }
-

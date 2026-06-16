@@ -29,9 +29,9 @@ Sentiment Analysis(SA) is a [natural language processing](https://en.wikipedia.o
 - In this project, we'll show how to efficiently convert, deploy and acclerate [MobileBERT-SST2](https://huggingface.co/Alireza1044/mobilebert_sst2) model on Snapdragon to perform Ondevice Sentiment Analysis.
 
 ## Prerequisites
-* Android Studio Dolphin Version 2021.3.1 to import and build the project
+* Android Studio Panda 4 Version 2025.3.4 to import and build the project
 
-* Qualcomm® Neural Processing Engine for AI SDK v2.x.x and its [dependencies](https://docs.qualcomm.com/bundle/publicresource/topics/80-63442-2/setup.html?product=1601111740010412) to integrate and accelerate the network on Snapdragon<br>
+* Setup Docker environment by following the instructions in [Tools/qairt_docker](../../Tools/qairt_docker/README.md)
 
 * Ensure the following dependencies to prepare and validate the model
 ```
@@ -39,6 +39,7 @@ pip install --upgrade pip setuptools
 pip install tensorflow==2.10.1
 pip install transformers==4.35.2 tokenizers==0.14.1 regex==2023.10.3
 pip install sacrebleu==2.3.1 colorama
+pip install "numpy<2"
 ```
 
 ## List of Supported Devices
@@ -60,12 +61,7 @@ python scripts/sa_model_gen.py
 Model will get generated at `./frozen_models` directory with name `mobilebert_sst2.pb` having Input Sequence_Length = `128` <br>
 <br>
 
-#### 1.2 Setup the Qualcomm® Neural Processing SDK Environment:
-```
-source <snpe-sdk-location>/bin/envsetup.sh -t $TENSORFLOW_DIR
-```
-
-#### 1.3 Convert generated frozen graph into DLC (Deep Learning Container):
+#### 1.2 Convert generated frozen graph into DLC (Deep Learning Container):
 ```
 snpe-tensorflow-to-dlc -i frozen_models/mobilebert_sst2.pb -d input_ids 1,128 -d attention_mask 1,128 --out_node Identity -o frozen_models/mobilebert_sst2.dlc
 ```
@@ -74,7 +70,7 @@ This command converts Tensorflow frozen graph into DLC format, which DSP, GPU An
 
 ###### <i>(If you are using a different Tensorflow version to generate PB file, it may be a case that Output Layer names gets changed. Please check the output layer names once by visualizing graph using Netron viewer or any other visualization tools )</i> <br>
 
-#### 1.4 Offline Preparation (caching) of DLC (for optimizing model loading/INIT time on DSP accelerator,  for 8750 use --htp_archs v79 , for 8850 use --htp_archs v81)
+#### 1.3 Offline Preparation (caching) of DLC (for optimizing model loading/INIT time on DSP accelerator,  for 8750 use --htp_archs v79 , for 8850 use --htp_archs v81)
 ```
 snpe-dlc-graph-prepare --input_dlc frozen_models/mobilebert_sst2.dlc --use_float_io --htp_archs v79
 ```
@@ -231,9 +227,9 @@ Following is the basic Question Answering Android App.
 <img src="readme_assets/screenshots/s4.png" width=20% height=20%>
 </p>
   
-## Qualcomm® Neural Processing SDK C++ APIs JNI Integration
+## Qualcomm AI Runtime (QAIRT) SDK C++ APIs JNI Integration
 
-Please refer to SDK Native application tutorial : https://docs.qualcomm.com/bundle/publicresource/topics/80-63442-2/usergroup8.html?product=1601111740010412
+Please refer to SDK Native application tutorial : https://docs.qualcomm.com/doc/80-63442-10/topic/general_overview.html
 
 ## Credits
 
@@ -250,4 +246,4 @@ The tokenizer src code is from https://github.com/huggingface/tflite-android-tra
 - https://docs.qualcomm.com/bundle/publicresource/topics/80-63442-2/usergroup8.html?product=1601111740010412
 
 
-###### *Qualcomm Neural Processing SDK is a product of Qualcomm Technologies, Inc. and/or its subsidiaries.*
+###### *Qualcomm AI Runtime (QAIRT) and Snapdragon are products of Qualcomm Technologies, Inc. and/or its subsidiaries.

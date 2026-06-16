@@ -6,7 +6,7 @@
 #RESOLVING DEPENDENCIES
 
 # steps to copy opencv
-wget https://sourceforge.net/projects/opencvlibrary/files/4.5.5/opencv-4.5.5-android-sdk.zip/download
+wget https://sourceforge.net/projects/opencvlibrary/files/4.13.0/opencv-4.13.0-android-sdk.zip/download
 unzip download
 rm download
 mkdir sdk

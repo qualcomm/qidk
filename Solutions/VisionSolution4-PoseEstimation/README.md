@@ -1,10 +1,9 @@
 # HRNET pose-estimation
 The project is designed to utilize the <b>Qualcomm® AI Runtime (QAIRT) for AI </b>, a deep learning software from Snapdragon platforms for Pose Detection in Android. The Android application can be designed to use any built-in/connected camera to capture the objects and use Machine Learning model to get the pose of any human present in the camera feed. This solution uses two opensource models to achieve better accuracy on Human Pose Estimation. We use YoloNAS_SSD to identify each person in a frame and then give this data to HRNET model to get pose estimation on the previously identified person.
 
-
 # Pre-requisites
 
-* Before starting the Android application, please follow the instructions for setting up QAIRT SDK using the link provided. https://docs.qualcomm.com/bundle/publicresource/topics/80-63442-2/setup.html?product=1601111740010412
+* Setup Docker environment by following the instructions in [Tools/qairt_docker](../../Tools/qairt_docker/README.md)
 * Android Studio Panda 4 Version 2025.3.4 to import and build the project
 * Android device 6.0 and above which uses below mentioned Snapdragon processors/Snapdragon HDK with display can be used to test the application 
 * Download Dataset and give its path to Generate_DLC.ipynb. Change variable "dataset_path" during Quantization for both models.
@@ -16,7 +15,7 @@ The project is designed to utilize the <b>Qualcomm® AI Runtime (QAIRT) for AI <
 - Snapdragon 8 Gen3 (SM8650) - NPU Version: V75
 - Snapdragon 8 Gen2 (SM8550) - NPU Version: V73
 
-The above targets supports the application with CPU, GPU and DSP. For more information on the supported devices, please follow this link https://docs.qualcomm.com/bundle/publicresource/topics/80-63442-2/overview.html?product=1601111740010412
+The above targets supports the application with CPU, GPU and DSP. For more information on the supported devices, please follow this link https://docs.qualcomm.com/doc/80-63442-10/topic/general_overview.html
   
 # Source Overview
 
@@ -177,34 +176,18 @@ Model returns the respective Float Tensors, from which the shape of the object a
 
 1. Clone QIDK repo. 
 
-2. Run below script, from the directory where it is present, to resolve dependencies of this project.
+2. Use the Generate_models/GenerateDLC.ipynb notebook to generate the DLC files and 
+   resolve all necessary dependencies.
+   
+3. Import folder VisionSolution4-PoseEstimation as a project in Android Studio 
 
-* This will copy snpe-release.aar file from $SNPE_ROOT to "snpe-release" directory in Android project.
+4. Compile the project. 
 
-	**NOTE - If you are using SNPE version 2.11 or greater, please change following line in resolveDependencies.sh.**
-	```
-	From: cp $SNPE_ROOT/android/snpe-release.aar snpe-release
-	To : cp $SNPE_ROOT/lib/android/snpe-release.aar snpe-release
-	```
-* Download opencv and paste to sdk directory, to enable OpenCv for android Java.
+5. Output APK file should get generated : app-debug.apk
 
-```java
-    sed -i 's/\r$//' resolveDependencies.sh
-	bash resolveDependencies.sh
-```
+6. Prepare the Qualcomm Innovators development kit to install the application
 
-	
-3. Run jupyter notebook Generate_models/GenerateDLC.ipynb to generate DLC(s) for YoloNAS_SSD, HRNET for hrnet_axis_int8.dlc. Change dataset_path with Coco Dataset Path.
-				  
-* This script generates required dlc(s) and paste them to appropriate location. 
-
-
-4. Do gradle sync
-5. Compile the project. 
-6. Output APK file should get generated : app-debug.apk
-7. Prepare the Qualcomm Innovators development kit to install the application (Do not run APK on emulator)
-
-8. If Unsigned or Signed DSP runtime is not getting detected, then please check the logcat logs for the FastRPC error. DSP runtime may not get detected due to SE Linux security policy. Please try out following commands to set permissive SE Linux policy.
+7. If Unsigned or Signed DSP runtime is not getting detected, then please check the logcat logs for the FastRPC error. DSP runtime may not get detected due to SE Linux security policy. Please try out following commands to set permissive SE Linux policy.
 
 It is recommended to run below commands.
 
@@ -216,12 +199,12 @@ adb remount
 adb shell setenforce 0
 ```
 
-9. Install and test application : app-debug.apk
+8. Install and test application : app-debug.apk
 ```java
 adb install -r -t app-debug.apk
 ```
 
-10. launch the application
+9. launch the application
 
 Following is the basic "Pose Detection Yolo NAS" Android App 
 
@@ -242,4 +225,4 @@ Same results for the application are :
 5. https://github.com/leoxiaobin/deep-high-resolution-net.pytorch
 
 	
-###### *Snapdragon and Qualcomm Neural Processing SDK are products of Qualcomm Technologies, Inc. and/or its subsidiaries.*
+###### *Snapdragon and Qualcomm AI Runtime (QAIRT) are products of Qualcomm Technologies, Inc. and/or its subsidiaries.*

@@ -8,7 +8,7 @@ Prerequisites:
 - Docker installed and running on your host machine
 - (Optional) Android NDK — downloaded automatically inside the image if not present
 
-Note: QAIRT SDK (v2.46.0.260424) and Android NDK (r26c) are downloaded automatically during docker image build.
+Note: QAIRT SDK (v2.47.0.260601) and Android NDK (r26c) are downloaded automatically during docker image build.
 
 ------------------------------------------------------------
 Quick Start (Single Command)

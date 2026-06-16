@@ -2,7 +2,7 @@
 
 ### About "Image Enhancement"
 
-- Current project is an sample Android application for AI-based Image Enhancement using <b>Qualcomm® Neural Processing SDK for AI </b> framework.
+- Current project is an sample Android application for AI-based Image Enhancement using <b>Qualcomm® AI Runtime (QAIRT)</b> framework. 
 - Model used in this sample is : EnlightenGAN <https://arxiv.org/abs/1906.06972>
 - This solution can take variable size input image and after preprocessing it can apply the enhancement model to the image.
 - If users intend to use a different model in this demo framework, they need to also take care of image pre/post processing.
@@ -10,9 +10,8 @@
 
 ### Pre-Requisites
 
-- Qualcomm® Neural Processing SDK setup should be completed by following the guide here:<br> https://docs.qualcomm.com/bundle/publicresource/topics/80-63442-2/setup.html?product=1601111740010412
-- Android Studio Dolphin Version 2021.3.1 to import sample project
-- Android NDK to build native code
+- Setup Docker environment by following the instructions in [Tools/qairt_docker](../../Tools/qairt_docker/README.md)
+- Android Studio Panda 4 Version 2025.3.4
 
 ## List of Supported Devices
 
@@ -136,13 +135,20 @@ you need to release the model after you are done with it.<br/>
 ## Build APK file with Android Studio 
 
 1. Clone QIDK repo. 
+
 2. Generate DLC using the steps mentioned above (enlight_axisQ_cached.dlc)
+
 3. Copy "snpe-release.aar" file from android folder in "Qualcomm Neural Processing SDK for AI" release from Qualcomm Developer Network into this folder : VisionSolution3-ImageEnhancement\snpe-release\
-   Command: cp $SNPE_ROOT/lib/android/snpe-release.aar snpe-release
+   Command: cp $QAIRT_SDK_ROOT/lib/android/snpe-release.aar snpe-release
+
 4. Copy DLC generated in step-2 at : VisionSolution3-ImageEnhancement\enhancement\src\main\assets\ (enlight_axisQ_cached.dlc)
+
 5. Import folder VisionSolution3-ImageEnhancement as a project in Android Studio 
+
 6. Compile the project. 
+
 7. Output APK file should get generated : enhancement-debug.apk
+
 8. Prepare the Qualcomm Innovators development kit to install the application (Do not run APK on emulator)
 
 If Unsigned or Signed DSP runtime is not getting detected, then please check the logcat logs for the FastRPC error. DSP runtime may not get detected due to SE Linux security policy. Please try out following commands to set permissive SE Linux policy.
@@ -181,4 +187,4 @@ Same results for the application are :
 2. https://github.com/arsenyinfo/EnlightenGAN-inference
 
     
-###### *Qualcomm Neural Processing SDK and Snapdragon are products of Qualcomm Technologies, Inc. and/or its subsidiaries.*    
+###### *Qualcomm AI Runtime (QAIRT) and Snapdragon are products of Qualcomm Technologies, Inc. and/or its subsidiaries.

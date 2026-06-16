@@ -12,8 +12,7 @@ This repository contains sample android applications, which are designed to use 
 3. [AIMET Model Zoo](https://github.com/quic/aimet-model-zoo)
 4. [Android Studio](https://developer.android.com/studio/archive)
    The recommended version of Android Studio varies by solution:
-   - **Dolphin Version 2021.3.1** for most Solutions (NLP, Vision - Object Detection, Super Resolution, Image Enhancement, Detection Transformer)
-   - **Panda 4 Version 2025.3.4** for Pose Estimation
+   - **Panda 4 Version 2025.3.4** for most Solutions (NLP, Vision - Object Detection, Super Resolution, Image Enhancement, Detection Transformer)
    - **Meerkat 2024.3.1** for all GenAI Solutions
 
 Contents of this repository are verified on Snapdragon 8 Gen2, Snapdragon 8 Gen3, Snapdragon 8 Elite, Snapdragon 8 Elite Gen5 platforms. 
@@ -77,16 +76,15 @@ Contain end-to-end ready-to-run solutions
 
 |   Type     | Solution   |   SDK   |sdk version|   API   | Model   |   ReadMe |  Demo   | Android Studio |
 |  :---:     |    :---:   |    :---:  |    :---:  |    :---:  |    :---:  |   :---:  |  :---:  |  :---:  |
-|  NLP       | Question Answering       |  Qualcomm AI Runtime (QAIRT) | v2.40.0 |Native API | Electra-small     |  [ReadMe](./Solutions/NLPSolution1-QuestionAnswering/README.md) |   [Demo](./Solutions/NLPSolution1-QuestionAnswering/README.md#qa-app-workflow)   | Dolphin Version 2021.3.1 |
-|  NLP       | Sentiment Analysis       |  Qualcomm AI Runtime (QAIRT) | v2.40.0 | Native API | MobileBERT     |  [ReadMe](./Solutions/NLPSolution2-SentimentAnalysis/README.md)  |   [Demo](./Solutions/NLPSolution2-SentimentAnalysis/README.md#sa-app-workflow)   | Dolphin Version 2021.3.1 |
-|  NLP       | ASR  | Qualcomm AI Runtime (QAIRT) | v2.40.0 | Native API | Whisper | [ReadMe](./Solutions/NLPSolution3-AutomaticSpeechRecognition-Whisper/README.md) | [Demo](./Solutions/NLPSolution3-AutomaticSpeechRecognition-Whisper/README.md#Result) | Dolphin Version 2021.3.1 |
-|  Vision    | QNN based Object Detection YoloNAS | Qualcomm AI Runtime (QAIRT) | v2.40.0 | Native API | YoloNAS| [ReadMe](./Solutions/QNN/VisionSolution1-ObjectDetection-YoloNas/README.md)| [Demo](./Solutions/QNN/VisionSolution1-ObjectDetection-YoloNas/demo/ObjectDetectYoloNAS.gif)| Dolphin Version 2021.3.1 |
-|  Vision    | Object Detection       |  Qualcomm AI Runtime (QAIRT) | v2.10.0 |   Java API  | Mobilenet SSD V2    | [ReadMe](./Solutions/VisionSolution1-ObjectDetection/README.md) |   [Demo](./Solutions/VisionSolution1-ObjectDetection/demo/ObjectDetection-Demo.gif)   | Dolphin Version 2021.3.1 |
-|  Vision    | Object Detection YoloNAS | Qualcomm AI Runtime (QAIRT) | v2.40.0 | Native API | YoloNAS| [ReadMe](./Solutions/VisionSolution1-ObjectDetection-YoloNas/README.md)| [Demo](./Solutions/VisionSolution1-ObjectDetection-YoloNas/demo/ObjectDetectYoloNAS.gif)| Dolphin Version 2021.3.1 |
-|  Vision    | Image Super Resolution       |Qualcomm AI Runtime (QAIRT) | v2.40.0 |   Java API | SESR XL    | [ReadMe](./Solutions/VisionSolution2-ImageSuperResolution/README.md) |   [Demo](./Solutions/VisionSolution2-ImageSuperResolution/demo/VisionSolution2-ImageSuperResolution.gif)   | Dolphin Version 2021.3.1 |
-|  Vision    | Image Enhancement       |Qualcomm AI Runtime (QAIRT) | v2.40.0 |  Java API | EnhancedGAN    | [ReadMe](./Solutions/VisionSolution3-ImageEnhancement/README.md)  |   [Demo](./Solutions/VisionSolution3-ImageEnhancement/demo/VisionSolution3-ImageEnhancement.gif)   | Dolphin Version 2021.3.1 |
-|  Vision    | Pose Estimation |Qualcomm AI Runtime (QAIRT)| v2.40.0 | Native API|YoloNAS + HRNet| [ReadMe](./Solutions/VisionSolution4-PoseEstimation/README.md)|[Demo](./Solutions/VisionSolution4-PoseEstimation/demo/PoseDetectionYoloNas.gif)| Panda 4 Version 2025.3.4 |
-|  Vision    | Detection Transformer | Qualcomm AI Runtime (QAIRT) | v2.40.0 | Native API | DETR | [ReadMe](./Solutions/VisionSolution1-ObjectDetection-DETR/README.md) | [Demo](./Solutions/VisionSolution1-ObjectDetection-DETR/demo/ObjectDetectDETR.avi)| Dolphin Version 2021.3.1 |
+|  NLP       | Question Answering       |  Qualcomm AI Runtime (QAIRT) | v2.47.0 |Native API | Electra-small     |  [ReadMe](./Solutions/NLPSolution1-QuestionAnswering/README.md) |   [Demo](./Solutions/NLPSolution1-QuestionAnswering/README.md#qa-app-workflow)   | Panda 4 Version 2025.3.4 |
+|  NLP       | Sentiment Analysis       |  Qualcomm AI Runtime (QAIRT) | v2.47.0 | Native API | MobileBERT     |  [ReadMe](./Solutions/NLPSolution2-SentimentAnalysis/README.md)  |   [Demo](./Solutions/NLPSolution2-SentimentAnalysis/README.md#sa-app-workflow)   | Panda 4 Version 2025.3.4 |
+|  NLP       | ASR  | Qualcomm AI Runtime (QAIRT) | v2.47.0 | Native API | Whisper | [ReadMe](./Solutions/NLPSolution3-AutomaticSpeechRecognition-Whisper/README.md) | [Demo](./Solutions/NLPSolution3-AutomaticSpeechRecognition-Whisper/README.md#Result) | Panda 4 Version 2025.3.4 |
+|  Vision    | QNN based Object Detection YoloNAS | Qualcomm AI Runtime (QAIRT) | v2.47.0 | Native API | YoloNAS| [ReadMe](./Solutions/QNN/VisionSolution1-ObjectDetection-YoloNas/README.md)| [Demo](./Solutions/QNN/VisionSolution1-ObjectDetection-YoloNas/demo/ObjectDetectYoloNAS.gif)| Panda 4 Version 2025.3.4 |
+|  Vision    | Object Detection YoloNAS | Qualcomm AI Runtime (QAIRT) | v2.47.0 | Native API | YoloNAS| [ReadMe](./Solutions/VisionSolution1-ObjectDetection-YoloNas/README.md)| [Demo](./Solutions/VisionSolution1-ObjectDetection-YoloNas/demo/ObjectDetectYoloNAS.gif)| Panda 4 Version 2025.3.4 |
+|  Vision    | Image Super Resolution       |Qualcomm AI Runtime (QAIRT) | v2.47.0 |   Java API | SESR XL    | [ReadMe](./Solutions/VisionSolution2-ImageSuperResolution/README.md) |   [Demo](./Solutions/VisionSolution2-ImageSuperResolution/demo/VisionSolution2-ImageSuperResolution.gif)   | Panda 4 Version 2025.3.4 |
+|  Vision    | Image Enhancement       |Qualcomm AI Runtime (QAIRT) | v2.47.0 |  Java API | EnhancedGAN    | [ReadMe](./Solutions/VisionSolution3-ImageEnhancement/README.md)  |   [Demo](./Solutions/VisionSolution3-ImageEnhancement/demo/VisionSolution3-ImageEnhancement.gif)   | Panda 4 Version 2025.3.4 |
+|  Vision    | Pose Estimation |Qualcomm AI Runtime (QAIRT)| v2.47.0 | Native API|YoloNAS + HRNet| [ReadMe](./Solutions/VisionSolution4-PoseEstimation/README.md)|[Demo](./Solutions/VisionSolution4-PoseEstimation/demo/PoseDetectionYoloNas.gif)| Panda 4 Version 2025.3.4 |
+|  Vision    | Detection Transformer | Qualcomm AI Runtime (QAIRT) | v2.47.0 | Native API | DETR | [ReadMe](./Solutions/VisionSolution1-ObjectDetection-DETR/README.md) | [Demo](./Solutions/VisionSolution1-ObjectDetection-DETR/demo/ObjectDetectDETR.avi)| Panda 4 Version 2025.3.4 |
 
 ## GenAI-Solutions
 

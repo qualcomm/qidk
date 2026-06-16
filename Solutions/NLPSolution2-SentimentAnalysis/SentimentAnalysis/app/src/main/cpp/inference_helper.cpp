@@ -6,6 +6,7 @@
 #include <jni.h>
 #include <string>
 #include <iostream>
+#include <cassert>
 #include "android/log.h"
 
 #include "zdl/SNPE/SNPE.hpp"

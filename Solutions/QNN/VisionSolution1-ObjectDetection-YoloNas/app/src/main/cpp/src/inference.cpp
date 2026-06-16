@@ -74,7 +74,7 @@ sample_app::StatusCode setPerfConfig(const std::string& perfLevel) {
     }
 
     // -------------------------------------------------------------------------
-    // Config [0]: DCVS V3 — voltage corners, sleep latency, DCVS enable
+    // Config [0]: DCVS V3 ï¿½ voltage corners, sleep latency, DCVS enable
     // -------------------------------------------------------------------------
     QnnHtpPerfInfrastructure_PowerConfig_t dcvsConfig;
     memset(&dcvsConfig, 0, sizeof(dcvsConfig));
@@ -89,15 +89,15 @@ sample_app::StatusCode setPerfConfig(const std::string& perfLevel) {
     dcvsConfig.dcvsV3Config.powerMode          = QNN_HTP_PERF_INFRASTRUCTURE_POWERMODE_PERFORMANCE_MODE;
 
     // -------------------------------------------------------------------------
-    // Config [1]: RPC Control Latency — fixed at 100 µs for all profiles
+    // Config [1]: RPC Control Latency ï¿½ fixed at 100 ï¿½s for all profiles
     // -------------------------------------------------------------------------
     QnnHtpPerfInfrastructure_PowerConfig_t rpcLatencyConfig;
     memset(&rpcLatencyConfig, 0, sizeof(rpcLatencyConfig));
     rpcLatencyConfig.option                    = QNN_HTP_PERF_INFRASTRUCTURE_POWER_CONFIGOPTION_RPC_CONTROL_LATENCY;
-    rpcLatencyConfig.rpcControlLatencyConfig   = 100;  // µs
+    rpcLatencyConfig.rpcControlLatencyConfig   = 100;  // ï¿½s
 
     // -------------------------------------------------------------------------
-    // Config [2]: RPC Polling Time — 9999 µs for high-perf, 0 for power-saver
+    // Config [2]: RPC Polling Time ï¿½ 9999 ï¿½s for high-perf, 0 for power-saver
     // -------------------------------------------------------------------------
     QnnHtpPerfInfrastructure_PowerConfig_t rpcPollingConfig;
     memset(&rpcPollingConfig, 0, sizeof(rpcPollingConfig));
@@ -233,7 +233,7 @@ sample_app::StatusCode setPerfConfig(const std::string& perfLevel) {
     }
 
     __android_log_print(ANDROID_LOG_INFO, "QNN",
-        "setPerfConfig: SUCCESS — profile='%s'", perfLevel.c_str());
+        "setPerfConfig: SUCCESS ï¿½ profile='%s'", perfLevel.c_str());
     return sample_app::StatusCode::SUCCESS;
 }
 
@@ -343,7 +343,7 @@ std::string build_network(const char * modelPath_cstr, const char* backEndPath_c
         }
     } else {
         __android_log_print(ANDROID_LOG_INFO, "QNN",
-            "build_network: Non-HTP backend detected — skipping perf infra setup");
+            "build_network: Non-HTP backend detected ï¿½ skipping perf infra setup");
     }
     //---------------------------------------------------------------------------
     
@@ -448,31 +448,25 @@ bool executeModel(cv::Mat &img, int orig_width, int orig_height, int &numberofob
     float32_t pp_seconds, pp_useconds, pp_milli_time;
     gettimeofday(&pp_start_time, NULL);
 
-    // below part values are constantish and somewhat diff from
+    // Identify outputs by size rather than assuming a fixed order, which can
+    // change across QAIRT SDK versions.
+    // Classes tensor: 2100*80=168000 floats.  Boxes tensor: 2100*4=8400 floats.
     std::vector<float32_t> BBout_boxcoords, BBout_class;
-    float32_t* buffer_BBout_class = reinterpret_cast<float32_t *>(out[0].data);
-    int BBout_class_length = out[0].cols * out[0].rows * out[0].channels();
-    __android_log_print(ANDROID_LOG_ERROR, "QNN ", "BBout_class SIZE width::%d height::%d channels::%d", out[0].cols, out[0].rows, out[0].channels());
-    for(int i=0;i<BBout_class_length;i++){
-        if(i < 20)
-            __android_log_print(ANDROID_LOG_ERROR, "QNN ", "buffer_BBout_class[%d] = %f", i, buffer_BBout_class[i]);
-        BBout_class.push_back(buffer_BBout_class[i]);
-    }
-    __android_log_print(ANDROID_LOG_ERROR, "QNN ", "BBout_class length = %d", BBout_class.size());
-
-    if (modelobj->model_name != YoloX) {
-        float32_t *buffer_BBout_boxcoords = reinterpret_cast<float32_t *>(out[1].data);
-        int BBout_boxcoords_length = out[1].cols * out[1].rows * out[1].channels();
+    for (int idx = 0; idx < 2; idx++) {
+        float32_t* buf = reinterpret_cast<float32_t *>(out[idx].data);
+        int len = out[idx].cols * out[idx].rows * out[idx].channels();
         __android_log_print(ANDROID_LOG_ERROR, "QNN ",
-                            "BBout_boxcoords SIZE width::%d height::%d channels::%d", out[1].cols,
-                            out[1].rows, out[1].channels());
-        for (int i = 0; i < BBout_boxcoords_length; i++) {
-            if (i < 20)
-                __android_log_print(ANDROID_LOG_ERROR, "QNN ", "buffer_BBout_boxcoords[%d] = %f", i,
-                                    buffer_BBout_boxcoords[i]);
-            BBout_boxcoords.push_back(buffer_BBout_boxcoords[i]);
+            "out[%d] SIZE width::%d height::%d channels::%d len::%d",
+            idx, out[idx].cols, out[idx].rows, out[idx].channels(), len);
+        if (len == 2100 * 80) {
+            for (int i = 0; i < len; i++) BBout_class.push_back(buf[i]);
+            __android_log_print(ANDROID_LOG_ERROR, "QNN ", "out[%d] -> BBout_class (len=%d)", idx, len);
+        } else if (len == 2100 * 4) {
+            for (int i = 0; i < len; i++) BBout_boxcoords.push_back(buf[i]);
+            __android_log_print(ANDROID_LOG_ERROR, "QNN ", "out[%d] -> BBout_boxcoords (len=%d)", idx, len);
+        } else {
+            __android_log_print(ANDROID_LOG_WARN, "QNN ", "out[%d] unrecognised size %d", idx, len);
         }
-        __android_log_print(ANDROID_LOG_ERROR, "QNN ", "BBout_boxcoords length = %d", BBout_boxcoords.size());
     }
 
     modelobj->postprocess(orig_width, orig_height, numberofobj, BB_coords, BB_names, BBout_boxcoords, BBout_class, milli_time);

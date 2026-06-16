@@ -1,28 +1,50 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.6.10'
+    ext.kotlin_version = '2.0.21'
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.1'
+        classpath 'com.android.tools.build:gradle:8.5.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
+tasks.register('clean', Delete) {
+    delete rootProject.buildDir
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+// Fix JVM-target mismatch in :sdk (external OpenCV module) without modifying it.
+// Java is set to 17 in sdk/build.gradle but Kotlin defaults to JDK 21.
+// Kotlin compilation is disabled for :sdk because OpenCV 4.13.0 MatAt.kt uses
+// UByte <unsafe-coerce> patterns that crash the Kotlin 2.x IR backend (internal
+// compiler error). The OpenCV Java API works fully without the Kotlin extensions.
+// Also disable prefabPublishing to avoid AGP bug with broken intermediate path construction.
+subprojects {
+    afterEvaluate { project ->
+        if (project.name == 'sdk') {
+            project.tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+                enabled = false
+            }
+            project.android.buildFeatures.prefabPublishing = false
+            // Enable AIDL and add source dir so OpenCVEngineInterface.aidl is compiled;
+            // both are omitted from the sdk/build.gradle shipped with OpenCV 4.13.0.
+            project.android.buildFeatures.aidl = true
+            project.android.sourceSets.main.aidl.srcDirs(['java/src'])
+            // Redirect the entire sdk build directory to local temp so that AGP 8.x
+            // C/C++ intermediate paths (build/intermediates/cxx/…/logs/) are created on
+            // a local drive instead of the network-mapped Z: drive, where Windows fails
+            // to create subdirectories before writing timing files.
+            project.buildDir = new File(System.getProperty("java.io.tmpdir"), "sdk_build")
+            // Also redirect the cmake staging directory (.cxx/) which AGP writes relative
+            // to the module project dir (not under buildDir), hitting the same Z: issue.
+            project.android.externalNativeBuild.cmake.buildStagingDirectory =
+                new File(System.getProperty("java.io.tmpdir"), "sdk_cxx")
+        }
+    }
 }
