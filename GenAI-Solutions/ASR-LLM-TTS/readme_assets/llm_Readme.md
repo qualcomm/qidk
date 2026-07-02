@@ -14,23 +14,27 @@
 ### Case 2: Generate model from QPM-Notebooks
 
 - You can run generate the llama-3.2-3B-SSD(Self Speculative Decoded) model from [QPM-Notebook](https://qpm.qualcomm.com/#/main/tools/details/Tutorial_for_Llama3p2_3B_Instruct_IoT). 
-
-    ```bash
+  Export the QAIRT SDK path
+  ```
+  export QAIRT_SDK_ROOT=<path to QAIRT SDK>/2.45.40.260406/
+  ```
+  
+  ```bash
     qpm-cli --login <username>
     qpm-cli --license-activate Tutorial_for_Llama3p2_3B_Instruct_IoT
     qpm-cli --extract Tutorial_for_Llama3p2_3B_Instruct_IoT (or)
     qpm-cli --extract <full path to downloaded .qik file>
-
-    ```
+  ```
 ## Setup android app
 
 ```bash
 mkdir -p ./sample_app/app/src/main/jniLibs/arm64-v8a
 
-cp <QNN_SDK_ROOT>/libs/aarch64-android/libGenie.so \
-   <QNN_SDK_ROOT>/libs/aarch64-android/libQnnHtp.so \
-   <QNN_SDK_ROOT>/libs/aarch64-android/libQnnHtpVXXStub.so \
-   <QNN_SDK_ROOT>/libs/aarch64-android/libQnnSystem.so \
+cp $QAIRT_SDK_ROOT/lib/aarch64-android/libGenie.so \
+   $QAIRT_SDK_ROOT/lib/aarch64-android/libQnnHtp.so \
+   $QAIRT_SDK_ROOT/lib/aarch64-android/libQnnHtpV81Stub.so \
+   $QAIRT_SDK_ROOT/lib/aarch64-android/libQnnHtpV79Stub.so \
+   $QAIRT_SDK_ROOT/lib/aarch64-android/libQnnSystem.so \
    ./sample_app/app/src/main/jniLibs/arm64-v8a/
 
 ```
@@ -38,9 +42,9 @@ cp <QNN_SDK_ROOT>/libs/aarch64-android/libGenie.so \
 Copy Genie header files.
 
 ```bash
-mkdir -p ./sample_app/app/src/main/jniLibs/arm64-v8a
+mkdir -p ./sample_app/app/src/main/cpp/genie/
 
-cp <QNN_SDK_ROOT>/include/Genie/* ./sample_app/app/src/main/cpp/genie/
+cp $QAIRT_SDK_ROOT/include/Genie/* ./sample_app/app/src/main/cpp/genie/
 ```
 
 ### Target directory after coping
@@ -58,14 +62,16 @@ sample_app/
 
 ```
 ## Setup device
--  Now create a folder <llama_3p2_3b> and  push the models, tokenizers, htp_backend_ext_config.json file there. You can get more information from [aihub_llm_on_genie_link](https://github.com/quic/ai-hub-apps/tree/main/tutorials/llm_on_genie).
-- Copy  "<QNN_SDK_ROOT>/libs/hexagon-vXX/unsigned/*" libs to the <llama_3p2_3b>.
+- Now create a folder llama_3p2_3b and  push the models, tokenizers, htp_backend_ext_config.json file there. You can get more information from [aihub_llm_on_genie_link](https://github.com/quic/ai-hub-apps/tree/main/tutorials/llm_on_genie).
+- Modify genie_config.json in the genie_bundle package and update the paths for tokenizer.json, model context binaries (ctx-bins), and htp_backend_ext_config.json to /storage/emulated/0/Android/data/com.example.tts/files/llama_3p2_3b
+- Copy  "$QAIRT_SDK_ROOT/libs/hexagon-v81/unsigned/*" libs to the <llama_3p2_3b>.
+- Copy  "$QAIRT_SDK_ROOT/libs/hexagon-v79/unsigned/*" libs to the <llama_3p2_3b>.
     #### SoC → Version Mapping
 
         SM8850: V81  
         SM8750: V79  
 
-- Copy "<QNN_SDK_ROOT>/libs/aarch64-android/*" to the <llama_3p2_3b>
+- Copy "<QAIRT_SDK_ROOT>/libs/aarch64-android/*" to the <llama_3p2_3b>
 
 - Now push the artifacts to the device
 

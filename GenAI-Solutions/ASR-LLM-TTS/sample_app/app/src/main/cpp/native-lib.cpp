@@ -251,6 +251,24 @@ Java_com_example_asr_1llm_1tts_MainActivity_free_1genie(JNIEnv* env, jobject /*t
 }
 extern "C"
 JNIEXPORT jint JNICALL
+Java_com_example_asr_1llm_1tts_MainActivity_set_1tts_1adsp_1path(JNIEnv* env, jobject /*thiz*/, jstring tts_path) {
+    JniUtfChars pathC(env, tts_path);
+    if (!pathC.valid()) {
+        LOGE("set_tts_adsp_path: invalid path");
+        return -1;
+    }
+    std::string newPath = pathC.get();
+    LOGI("ADSP Lib Path (after TTS) = %s", newPath.c_str());
+    const int a = setenv("ADSP_LIBRARY_PATH", newPath.c_str(), 1 /*override*/);
+    const int b = setenv("LD_LIBRARY_PATH",   newPath.c_str(), 1 /*override*/);
+    if (a != 0 || b != 0) {
+        LOGE("Failed to set ADSP/LD envs (setenv returned a=%d, b=%d)", a, b);
+        return false;
+    }
+    return 0;
+}
+extern "C"
+JNIEXPORT jint JNICALL
 Java_com_example_asr_1llm_1tts_MainActivity_reset_1genie(JNIEnv *env, jobject thiz) {
     // TODO: implement reset_genie()
     Genie_Status_t reset_status=GenieDialog_reset(dialogHandle);

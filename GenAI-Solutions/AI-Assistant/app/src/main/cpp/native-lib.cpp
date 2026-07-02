@@ -36,7 +36,7 @@ static jmethodID g_handleString= nullptr;
 
 //Setting the ADSP path
 bool SetAdspLibraryPath(std::string nativeLibPath) {
-    nativeLibPath += ";/data/local/tmp";
+    nativeLibPath += ";/data/local/tmp/genie_bundle/";
     LOGI("ADSP Lib Path = %s", nativeLibPath.c_str());
     const int a = setenv("ADSP_LIBRARY_PATH", nativeLibPath.c_str(), 1 /*override*/);
     const int b = setenv("LD_LIBRARY_PATH",   nativeLibPath.c_str(), 1 /*override*/);

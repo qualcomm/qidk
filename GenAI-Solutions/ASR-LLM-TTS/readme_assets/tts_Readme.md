@@ -18,9 +18,18 @@
 
 # Android app preparation
 1. Create `libs` directory in `./sample_app/app/`
+   ```
+   mkdir -p /sample_app/app/libs
+   ```
 2. Copy `tts-sdk.jar` in `melo_sdk/libs/npu/rpc_libraries/android/` to `./sample_app/app/libs/`.
+   ```
+   cp <path to TTS SDK>/VoiceAI_TTS/1.1.1.0/melo_sdk/libs/npu/rpc_libraries/android/tts-sdk.jar ./sample_app/app/libs/
+   ```
 3. Copy tts native libs `libtts_jni.so` and `libtts.so` in `melo_sdk/libs/npu/rpc_libraries/android/arm64-v8a/` to `./sample_app/app/src/main/jniLibs/arm64-v8a/`.
-4. Check and update the list of model name in TTSSample project's `app\src\main\res\values\languages.xml` file which should be same as the one generated via Notebook
+   ```
+   cp <path to TTS SDK>/VoiceAI_TTS/1.1.1.0/melo_sdk/libs/npu/rpc_libraries/android/arm64-v8a/* ./sample_app/app/src/main/jniLibs/arm64-v8a/
+   ```
+4. Check and update the list of model name in TTSSample project's `app/src/main/res/values/languages.xml` file which should be same as the one generated via Notebook
    ```
    <string-array name="language_models">
        <item>melo_en.64_bit.qnn_v2.33.0.qnn</item>
@@ -39,7 +48,8 @@
 2. Push tts skel lib to the device `/storage/emulated/0/Android/data/com.example.tts/files/tts/` directory
 
     ```bash
-    adb push melo_sdk/libs/npu/rpc_libraries/cdsp/libtts_impl_skel.so /storage/emulated/0/Android/data/com.example.tts/files/tts
+    adb push <path to TTS SDK>/VoiceAI_TTS/1.1.1.0/melo_sdk/libs/npu/rpc_libraries/cdsp/libtts_impl_skel.so /storage/emulated/0/Android/data/com.example.tts/files/tts
+	adb push <path to TTS SDK>/VoiceAI_TTS/1.1.1.0/melo_sdk/libs/npu/rpc_libraries/cdsp/libtts_impl_skel.so ./sample_app/app/src/main/jniLibs/arm64-v8a/
     ```
  3. Push the qnn-2.40(tested) libs to the device.
     - libQnnHtpVXX.so (such as libQnnHtpV81.so for SM8850, libQnnHtpV79.so for SM8750)
@@ -51,8 +61,10 @@
 
         ```bash
 
-        adb push ${QNN Package}/lib/hexagon-v79/unsigned/libQnnSystem.so /storage/emulated/0/Android/data/com.example.tts/files/tts/
-        adb push ${QNN Package}/lib/hexagon-v79/unsigned/libQnnHtpV79.so /storage/emulated/0/Android/data/com.example.tts/files/tts/
+        adb push $QAIRT_SDK_ROOT/lib/hexagon-v79/unsigned/libQnnSystem.so /storage/emulated/0/Android/data/com.example.tts/files/tts/
+        adb push $QAIRT_SDK_ROOT/lib/hexagon-v79/unsigned/libQnnHtpV79.so /storage/emulated/0/Android/data/com.example.tts/files/tts/
+        adb push $QAIRT_SDK_ROOT/lib/hexagon-v81/unsigned/libQnnHtpV81.so /storage/emulated/0/Android/data/com.example.tts/files/tts/
+
         ```
 		
    After these steps done, the device folder `/storage/emulated/0/Android/data/com.example.tts/files/tts/` should contain following models:

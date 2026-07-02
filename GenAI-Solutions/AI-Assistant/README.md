@@ -21,13 +21,13 @@ accelerate LLMs using the Snapdragon NPU.
 
 ### Download LLM Model from AI HUB
 
-- Follow steps in this [LLM On-Device Deployment] (https://github.com/quic/ai-hub-apps/tree/main/tutorials/llm_on_genie) to "Setting up a Python environment with Qualcomm AI Hub Models".
+- Follow steps in this [LLM On-Device Deployment](https://github.com/qualcomm/ai-hub-apps/tree/main/tutorials/llm_on_genie#setting-up-a-python-environment-with-qualcomm-ai-hub-models) to "Setting up a Python environment with Qualcomm AI Hub Models".
 
 - Exporting the model requires approximately 40–80GB of space. You can specify the HOME and TMPDIR paths in the export command to store the intermediate data.
 
 - Run export script to get context binaries for Llama variants.
 
-	- Read more about [exporting LLMs via AI Hub here](https://github.com/quic/ai-hub-apps/tree/main/tutorials/llm_on_genie#step-2-export-qairt-compatible-llm-models-on-the-host-machine)
+	- Read more about [exporting LLMs via AI Hub here](https://github.com/qualcomm/ai-hub-apps/blob/main/tutorials/llm_on_genie/export.md)
 
         - You'll have to replace model name from the above tutorial with `llama_v3_2_3b_instruct` or the model id of your choice and reduce context length for this demo when exporting.
 
@@ -57,7 +57,7 @@ accelerate LLMs using the Snapdragon NPU.
 1. Go to AI-Assistant directory
 
 	```bash
-	cd <qidk path location>/Solutions/AI-Assistant/
+	cd <qidk path location>/GenAI-Solutions/AI-Assistant/
 	```
 
 2. You need to take all the artifacts from here and copy it to **genie_bundle** as well as in this folder **GenAI\AI-Assistant\app\src\main\jniLibs\arm64-v8a**
@@ -70,41 +70,44 @@ accelerate LLMs using the Snapdragon NPU.
 	### For Snapdragon 8 Elite
 	```
 	cp $QAIRT_SDK_ROOT/lib/hexagon-v79/unsigned/* genie_bundle
+	cp $QAIRT_SDK_ROOT/lib/aarch64-android/* genie_bundle
+	cp $QAIRT_SDK_ROOT/bin/aarch64-android/genie-t2t-run genie_bundle
 	```
 	
-	### For Snapdragon 8 Elite
+	### For Snapdragon 8 Elite Gen5
 	```
 	cp $QAIRT_SDK_ROOT/lib/hexagon-v81/unsigned/* genie_bundle
-	```
-
-	### For all devices
-	```
 	cp $QAIRT_SDK_ROOT/lib/aarch64-android/* genie_bundle
 	cp $QAIRT_SDK_ROOT/bin/aarch64-android/genie-t2t-run genie_bundle
 	```
 
-3. Copy the json from genie_bundle to assets folder **GenAI\AI-Assistant\app\src\main\assets**
+3. Modify genie_config.json in the genie_bundle package and update the paths for tokenizer.json, model context binaries (ctx-bins), and htp_backend_ext_config.json to /data/local/tmp/genie_bundle/.
+	
+4. Copy the json from genie_bundle to assets folder **AI-Assistant\app\src\main\assets**
 	```
 	mkdir -p app/src/main/assets
 	mkdir -p app/src/main/jniLibs/arm64-v8a/
 	```	
+
+
+	
 	copy model artifacts
 	```
-	cp <path to exported genie_bundle>\genie_bundle\genie_config.json app\src\main\assets\<name according to llm model>.json #example llama_v3_2_3b_chat_quantized.json
-	cp <path to exported genie_bundle>\genie_bundle\htp_backend_ext_config.json app\src\main\assets\
-	cp <path to exported genie_bundle>\genie_bundle\tokenizer.json app\src\main\assets\
+	cp <path to exported genie_bundle>/genie_bundle/genie_config.json app/src/main/assets/<name according to llm model>.json #example llama_v3_2_3b_chat_quantized.json
+	cp <path to exported genie_bundle>/genie_bundle/htp_backend_ext_config.json app/src/main/assets/
+	cp <path to exported genie_bundle>/genie_bundle/tokenizer.json app/src/main/assets/
 	```
 	copy QAIRT artifacts
 	```
-	source scritps/resolveDependencies.sh 
+	source scripts/resolveDependencies.sh
 	```	
 
-4. Now push all the artifacts to this folder   **./data/local/tmp/**
+5. Now push all the artifacts to this folder   **./data/local/tmp/**
 	```
 	adb push .\genie_bundle\* /data/local/tmp/
 	```
 
-5. Use Android Studio to compile and install the application on the device.
+6. Use Android Studio to compile and install the application on the device.
 
 ## Execute LLM using genie-t2t-run
 

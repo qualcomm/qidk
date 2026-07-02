@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //nativeDirPath = this.getApplication().getApplicationInfo().nativeLibraryDir;
-        nativeDirPath = "/data/local/tmp";
+        nativeDirPath = "/data/local/tmp/;/data/local/tmp/genie_bundle/";
         Log.d(TAG,"native Dir Path: "+nativeDirPath);
         model_status=findViewById(R.id.modelStatusTextView);
         statusProgressBar=findViewById(R.id.model_loading_bar);
@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
         modelConfigMap.put("llama_v2_CPU", "llama2-7b-genaitransformer.json");
         modelConfigMap.put("llama_v3_0_HTP", "llama_v3_8b_chat_quantized.json");
         modelConfigMap.put("llama_v3_1_HTP", "llama_v3_1_8b_chat_quantized.json");
-        modelConfigMap.put("llama_v3_2_HTP", "llama_v3_8b_chat_quantized.json");
-        modelConfigMap.put("llama_v3_3_HTP", "llama_v3_2_3b_chat_quantized.json");
+        modelConfigMap.put("llama_v3_2_HTP", "llama_v3_2_3b_chat_quantized.json");
+        modelConfigMap.put("llama_v3_8_HTP", "llama_v3_8b_chat_quantized.json");
 
 
         fab=findViewById(R.id.fab);
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         modelSpinner.setAdapter(adapter);
         //llama_v3_2_3b set as default
-        int defaultPos = adapter.getPosition("llama_v3_3_HTP");
+        int defaultPos = adapter.getPosition("llama_v3_2_HTP");
         modelSpinner.setSelection(defaultPos);
 
 

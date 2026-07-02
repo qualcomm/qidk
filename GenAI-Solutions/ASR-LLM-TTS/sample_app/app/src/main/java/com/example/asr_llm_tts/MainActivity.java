@@ -48,7 +48,7 @@ import java.nio.file.Paths;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 
-public class MainActivity extends AppCompatActivity implements  Assistant.Handler, TranscriptionListener {
+public class MainActivity extends AppCompatActivity implements Assistant.Handler, TranscriptionListener {
     private static final String DEBUG_TAG = "ASR_LLM_TTS_MAIN_DEBUG";
     private static final String INFO_TAG = "ASR_LLM_TTS_MAIN_INFO";
     private final String Performance_TAG="ASR_LLM_TTS_MAIN_Performance";
@@ -69,19 +69,16 @@ public class MainActivity extends AppCompatActivity implements  Assistant.Handle
     CircularProgressIndicator llm_loading;
 
     private Assistant assistant;
-    private  String nativeDirPath;
     private static int llm_chat_count=0;
-    private final int mTTSAudioEncoding = TTS.AUDIO_ENCODING.LINEAR16.ordinal(); //"LINEAR16"
-
     private boolean llm_loaded=false;
     private boolean isLlmResponseActive=false;
+    private  String nativeDirPath;
+    private final int mTTSAudioEncoding = TTS.AUDIO_ENCODING.LINEAR16.ordinal(); //"LINEAR16"
     private TTSManager mTTSManager;
     private boolean fabMenuOpen = true;
     private boolean mRecording;
     private String mLastLanguage = null;
-
     private String mTranscription = "";
-
     private Whisper_ASR whisper_asr;
 
 
@@ -99,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements  Assistant.Handle
         getWindow().setNavigationBarColor(getColor(R.color.activity_background_color));
         initUI();
         isModelFileExisting();
+        load_llm_summariser();  // Auto-load LLM and ASR on startup
     }
 
     //-------------------------------------------------------------------- Utils & Helper functions------------------------------------------------------------------
@@ -131,7 +129,6 @@ public class MainActivity extends AppCompatActivity implements  Assistant.Handle
         super.onStart();
         Log.d(INFO_TAG, "onStart");
         initTTSEngine();
-        reset_genie();
     }
 
     @Override
@@ -198,13 +195,11 @@ public class MainActivity extends AppCompatActivity implements  Assistant.Handle
                              ExtendedFloatingActionButton summariser_btn,
                              ExtendedFloatingActionButton clearAll_btn) {
         fabReset.setVisibility(View.VISIBLE);
-        fabReload.setVisibility(View.VISIBLE);
         summariser_btn.setVisibility(View.VISIBLE);
         clearAll_btn.setVisibility(View.VISIBLE);
 
         // Animate up and fade in
         fabReset.animate().alpha(1f).translationY(-15f).setDuration(180).start();
-        fabReload.animate().alpha(1f).translationY(-15f).setDuration(200).start();
         summariser_btn.animate().alpha(1f).translationY(-10f).setDuration(200).start();
         clearAll_btn.animate().alpha(1f).translationY(-15f).setDuration(200).start();
 
@@ -220,9 +215,6 @@ public class MainActivity extends AppCompatActivity implements  Assistant.Handle
                               ExtendedFloatingActionButton clearAll_btn) {
         fabReset.animate().alpha(0f).translationY(0f).setDuration(160)
                 .withEndAction(() -> fabReset.setVisibility(View.GONE)).start();
-
-        fabReload.animate().alpha(0f).translationY(0f).setDuration(160)
-                .withEndAction(() -> fabReload.setVisibility(View.GONE)).start();
 
         summariser_btn.animate().alpha(0f).translationY(0f).setDuration(160)
                 .withEndAction(() -> summariser_btn.setVisibility(View.GONE)).start();
@@ -244,14 +236,17 @@ public class MainActivity extends AppCompatActivity implements  Assistant.Handle
 
         // Start hidden and reset position
         fabReset.setVisibility(View.GONE);
-        fabReload.setVisibility(View.VISIBLE);
+        fabReload.setVisibility(View.GONE);  // Reload disabled — models load automatically on startup
         summariser_btn.setVisibility(View.VISIBLE);
         clearAll_btn.setVisibility(View.VISIBLE);
 
         fabReset.setAlpha(0f);
-        fabReload.setAlpha(1f);
+        fabReload.setAlpha(0f);
         summariser_btn.setAlpha(1f);
         clearAll_btn.setAlpha(1f);
+
+        summariser_btn.setEnabled(false);  // Disabled until models finish loading
+        llm_loading.setVisibility(View.VISIBLE);
 
         fabReset.setTranslationY(0f);
         fabReload.setTranslationY(0f);
@@ -276,27 +271,23 @@ public class MainActivity extends AppCompatActivity implements  Assistant.Handle
                     whisper_asr.stopRecording();
                     mRecording = false;
                     clearAll_btn.setText("Start Recording");
-
                 } else {
                     Log.i(INFO_TAG, "Clearing previous text");
                     runOnUiThread(() -> mTTSInputEditText.getText().clear());
                     whisper_asr.startRecording();
                     mRecording = true;
-
                     clearAll_btn.setText("Stop Recording");
                 }
             }
-
         });
 
         summariser_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 //Disable all the buttons
                 runOnUiThread(() -> {
                     llm_loading.setVisibility(View.VISIBLE);
-                    summariser_btn.setEnabled(false); // disable button while loading\
+                    summariser_btn.setEnabled(false);
                     fabReload.setEnabled(false);
                     fabReset.setEnabled(false);
                     clearAll_btn.setEnabled(false);
@@ -312,7 +303,7 @@ public class MainActivity extends AppCompatActivity implements  Assistant.Handle
             mTTSInputEditText.setText("");
             llm_output_text.setText("");
             llm_loading.setVisibility(View.VISIBLE);
-            summariser_btn.setEnabled(false); // disable button while loading\
+            summariser_btn.setEnabled(false);
             fabReload.setEnabled(false);
             fabReset.setEnabled(false);
             clearAll_btn.setEnabled(false);
@@ -324,31 +315,15 @@ public class MainActivity extends AppCompatActivity implements  Assistant.Handle
                 Toast.makeText(this, "Resetting is unsuccessful", Toast.LENGTH_SHORT).show();
             }
 
-            //Enabling all the buttons after resetting
             llm_loading.setVisibility(View.GONE);
-            summariser_btn.setEnabled(true); // disable button while loading\
+            summariser_btn.setEnabled(true);
             fabReload.setEnabled(true);
             fabReset.setEnabled(true);
             clearAll_btn.setEnabled(true);
 
-
-
         });
 
-        fabReload.setOnClickListener(v -> {
-
-            //Disabling all the buttons
-            runOnUiThread(() -> {
-                llm_loading.setVisibility(View.VISIBLE);
-                summariser_btn.setEnabled(false); // disable button while loading\
-                fabReload.setEnabled(false);
-                fabReset.setEnabled(false);
-                clearAll_btn.setEnabled(false);
-            });
-
-            Toast.makeText(this, "loading models", Toast.LENGTH_SHORT).show();
-            load_llm_summariser();
-        });
+        // fabReload is disabled — models load automatically on app startup
     }
 
     //------------------------------------------------------------ AI assistant model loading & inferencing---------------------------------------------------
@@ -364,31 +339,19 @@ public class MainActivity extends AppCompatActivity implements  Assistant.Handle
                 if (llm_loaded) {
                     run_toast_on_ui_thread("LLM loaded successfully");
                     Log.d(INFO_TAG, "LLM loaded successfully");
-                }
-                // Load Whisper after LLM completes (sequential DSP access)
-                whisper_asr.initializeWhisper();
-                run_toast_on_ui_thread("Whisper loaded");
-                
-                initTTSEngine();
-                Log.d(INFO_TAG, "load_llm_summariser: TTS done");
-                run_toast_on_ui_thread("TTS loaded");
-
-                if (llm_loaded) {
-                    runOnUiThread(() -> {
-                        summariser_btn.setEnabled(true);
-                        fabReset.setEnabled(true);
-                        clearAll_btn.setEnabled(true);
-                    });
-
                 } else {
                     run_toast_on_ui_thread("Model load failed, Try again!!!");
                     Log.e(INFO_TAG, "LLM failed to load. Status: " + status);
                 }
 
-                //Enabling reload button
+                whisper_asr.initializeWhisper();
+                run_toast_on_ui_thread("Whisper loaded");
+
                 runOnUiThread(() -> {
                     llm_loading.setVisibility(View.GONE);
-                    fabReload.setEnabled(true);
+                    summariser_btn.setEnabled(llm_loaded);
+                    fabReset.setEnabled(llm_loaded);
+                    clearAll_btn.setEnabled(true);
                 });
             }
         }).start();
@@ -396,13 +359,10 @@ public class MainActivity extends AppCompatActivity implements  Assistant.Handle
 
     //Summarisation
     private void summarise(){
-        //It's running on separate thread
         if(llm_loaded && !isLlmResponseActive){
             if (mLLMTextINP == null || mLLMTextINP.trim().isEmpty()) {
                 run_toast_on_ui_thread("Add some Text to summarise!!");
                 Log.d(INFO_TAG,"Add some Text to summarise!!");
-
-                //If there is no text to summarise then enable the buttons
                 runOnUiThread(() -> {
                     llm_loading.setVisibility(View.GONE);
                     summariser_btn.setEnabled(true);
@@ -412,9 +372,7 @@ public class MainActivity extends AppCompatActivity implements  Assistant.Handle
                 });
                 return;
             }
-            runOnUiThread(() -> {
-                llm_loading.setVisibility(View.VISIBLE);
-            });
+            runOnUiThread(() -> { llm_loading.setVisibility(View.VISIBLE); });
             llm_chat_count+=1;
             boolean isFirstPrompt=llm_chat_count==1;
             assistant.query(mLLMTextINP,isFirstPrompt);
@@ -422,27 +380,23 @@ public class MainActivity extends AppCompatActivity implements  Assistant.Handle
         else{
             run_toast_on_ui_thread("Load the model first!!");
             Log.d(INFO_TAG,"Load the model first!!");
-
         }
     }
 
-
-    //LLM Response callback function
+    //LLM Response callback — output fed directly into TTS
     @Override
     public void onQueryResponse(String text, boolean isEndOfResponse, boolean isAborted) {
         isLlmResponseActive=true;
         try {
-            // Ensuring UI updates happen on main thread
             runOnUiThread(() -> {
                 if (llm_output_text != null) {
                     llm_loading.setVisibility(View.GONE);
                     llm_output_text.setVisibility(View.VISIBLE);
-                    // Handle null or empty text
                     llm_output_text.setText(text != null ? text : "");
                     if (isEndOfResponse) {
                         try {
                             if (text != null && !text.trim().isEmpty()) {
-                                Toast.makeText(MainActivity.this,"Summarisation completed, Now TTS starting",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this,"LLM done, starting TTS",Toast.LENGTH_SHORT).show();
                                 play_audio(text);
                                 isLlmResponseActive=false;
                             } else {
@@ -463,6 +417,7 @@ public class MainActivity extends AppCompatActivity implements  Assistant.Handle
     }
     public native int free_genie();
     public native int reset_genie();
+    public native int set_tts_adsp_path(String ttsPath);
 
 
     //---------------------------------------------------------------------- TTS Model Loading & Inference ---------------------------------------------------------
@@ -471,8 +426,10 @@ public class MainActivity extends AppCompatActivity implements  Assistant.Handle
         if (mTTSManager == null) {
             mTTSManager = new TTSManager(this);
         }
+
         mTTSManager.deInit();
         updateTTSConfig(mCurrentLanguage, mLanguagePosition);
+        set_tts_adsp_path(MODEL_DIR);  // Add TTS dir to ADSP_LIBRARY_PATH for DSP skel discovery
         mTTSManager.init(MODEL_DIR);
     }
     private void isModelFileExisting() {
@@ -508,9 +465,16 @@ public class MainActivity extends AppCompatActivity implements  Assistant.Handle
             Toast.makeText(this, "Text input should not be empty", Toast.LENGTH_SHORT).show();
             return;
         }
-        // Stop any active Whisper DSP inference before starting TTS
         whisper_asr.stopRecording();
-        Log.d(INFO_TAG, "play_audio: Whisper stopped, starting TTS");
+        mRecording = false;
+
+        // Free LLM from DSP before TTS runs, then reload LLM after TTS completes
+        // free_genie();
+        // set_tts_adsp_path(MODEL_DIR);
+        // llm_loaded = false;
+        // initTTSEngine();
+
+        Log.d(INFO_TAG, "play_audio: starting TTS");
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -524,11 +488,12 @@ public class MainActivity extends AppCompatActivity implements  Assistant.Handle
                     Log.i(INFO_TAG, "on play completed");
                     Log.i(Performance_TAG, "TTS play duration: " + durationMs + " ms (" + String.format("%.2f", durationSec) + " sec)");
 
+                    // Re-enable buttons so user can ask further queries
                     runOnUiThread(() -> {
                         summariser_btn.setEnabled(true);
-                        fabReload.setEnabled(true);
                         fabReset.setEnabled(true);
                         clearAll_btn.setEnabled(true);
+                        llm_loading.setVisibility(View.GONE);
                     });
                 });
             }
@@ -559,16 +524,13 @@ public class MainActivity extends AppCompatActivity implements  Assistant.Handle
         }
         return true;
     }
-    //----------------------------------------------------Whisper Callback functions to show results---------------------------------------------------
+    //----------------------------------------------------Whisper Callback functions---------------------------------------------------
     @Override
     public void onTranscriptionFinal(String fullText, String language) {
         if (mLastLanguage == null || !language.equals(mLastLanguage)) {
-//            mTranscription += System.lineSeparator() + "[" + language + "]: ";
             mLastLanguage = language;
         }
-        // Save all finalized transcriptions
         mTranscription = fullText + System.lineSeparator();
-        // Show on screen
         mTTSInputEditText.setText(mTranscription);
         mTTSInputEditText.setVisibility(View.VISIBLE);
         mRecording = false;

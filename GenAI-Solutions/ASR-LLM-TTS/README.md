@@ -9,11 +9,12 @@
 
 | **Device Name**           | **QAIRT Version** | **OS**                          |
 |---------------------------|-------------------|---------------------------------|
-| Snapdragon 8 Elite (V79)   | 2.43.0          | Android 15        |
+| Snapdragon 8 Elite (V79)       | 2.45.0          | Android 15        |
+| Snapdragon 8 Elite Gen5(V81)   | 2.45.0          | Android 16        |
 ---
 
 ## Prerequisite
--  Download QAIRT-2.43 version from QPM.
+-  Download QAIRT-2.45 version from QPM.
 - Android Studio Meerkat Version 2024.3.1 ([link](https://developer.android.com/studio/archive)).
 
 ## Quick Links

@@ -12,8 +12,7 @@ This repository contains sample android applications, which are designed to use 
 3. [AIMET Model Zoo](https://github.com/quic/aimet-model-zoo)
 4. [Android Studio](https://developer.android.com/studio/archive)
    The recommended version of Android Studio varies by solution:
-   - **Panda 4 Version 2025.3.4** for most Solutions (NLP, Vision - Object Detection, Super Resolution, Image Enhancement, Detection Transformer)
-   - **Meerkat 2024.3.1** for all GenAI Solutions
+   - **Panda 4 Version 2025.3.4**
 
 Contents of this repository are verified on Snapdragon 8 Gen2, Snapdragon 8 Gen3, Snapdragon 8 Elite, Snapdragon 8 Elite Gen5 platforms. 
 If users want to try this content on other Qualcomm platforms - please do check with the support e-mail mentioned below. 
@@ -92,9 +91,9 @@ Contain end-to-end ready-to-run solutions
 
 |   Type     | Solution   |   SDK   |sdk version|   API   | Model   |   ReadMe |  Demo   | Android Studio |
 |  :---:     |    :---:   |    :---:  |    :---:  |    :---:  |    :---:  |   :---:  |  :---:  |  :---:  |
-|  GenAI     | AI-Assistant       |  Qualcomm AI Runtime (QAIRT) | v2.40.0 |Native API | llama     |  [ReadMe](./GenAI-Solutions/AI-Assistant/README.md) |   [Demo](./GenAI-Solutions/AI-Assistant/demo/AI-Assistant.gif)   | Meerkat 2024.3.1 |
+|  GenAI     | AI-Assistant       |  Qualcomm AI Runtime (QAIRT) | v2.40.0 |Native API | llama     |  [ReadMe](./GenAI-Solutions/AI-Assistant/README.md) |   [Demo](./GenAI-Solutions/AI-Assistant/demo/AI-Assistant.gif)   | Panda 4 Version 2025.3.4 |
 |  GenAI     | speech_to_image       |  Qualcomm AI Runtime (QAIRT) | v2.40.0 |Native API | ASR, SD-1.5     |  [ReadMe](./GenAI-Solutions/speech_to_image/README.md) |   [Demo](./GenAI-Solutions/speech_to_image/images/demo_app.gif)   | Meerkat 2024.3.1 |
-|  GenAI     | ASR-LLM-TTS       |  Qualcomm AI Runtime (QAIRT) | v2.43.0 |Native API | ASR, LLM, TTS     |  [ReadMe](./GenAI-Solutions/ASR-LLM-TTS/README.md) |   [Demo](./GenAI-Solutions/ASR-LLM-TTS/demo_video/asr_llm_tts_demo_video.mov)   | Meerkat 2024.3.1 |
+|  GenAI     | ASR-LLM-TTS       |  Qualcomm AI Runtime (QAIRT) | v2.43.0 |Native API | ASR, LLM, TTS     |  [ReadMe](./GenAI-Solutions/ASR-LLM-TTS/README.md) |   [Demo](./GenAI-Solutions/ASR-LLM-TTS/demo_video/asr_llm_tts_demo_video.mov)   | Panda 4 Version 2025.3.4 |
 
 ## Tools
 
