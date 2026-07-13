@@ -37,7 +37,7 @@ jobs:
 
     # 5. Upload build artifact
     - name: Upload Pages artifact
-      uses: actions/upload-pages-artifact@v3
+      uses: actions/upload-pages-artifact@v5
       with:
         path: docs/build/html
 
