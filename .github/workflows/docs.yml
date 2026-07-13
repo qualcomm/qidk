@@ -1,0 +1,66 @@
+name: Build and Deploy Sphinx Docs (Official)
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+    # 1. Checkout code
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # 2. Setup Python
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.9'
+
+    # 3. Install dependencies
+    - name: Install dependencies
+      run: |
+        pip install -r docs/requirements.txt
+
+    # 4. Build Sphinx docs
+    - name: Build Sphinx HTML
+      run: |
+        cd docs
+        make html
+
+    # 5. Upload build artifact
+    - name: Upload Pages artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: docs/build/html
+
+    - name: Debug build output
+      run: |
+        echo "Listing build output:"
+        ls -R docs/build/html
+        tree docs/build/html
+
+
+  deploy:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4

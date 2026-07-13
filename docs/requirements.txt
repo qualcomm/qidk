@@ -1,0 +1,4 @@
+sphinx
+sphinx-rtd-theme
+sphinx-design
+sphinxcontrib-youtube

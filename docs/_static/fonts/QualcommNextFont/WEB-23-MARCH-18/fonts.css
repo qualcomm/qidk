@@ -1,0 +1,55 @@
+@font-face {
+	font-family:'Qualcomm Next';
+	src:	url('QualcommNext-ThinItalicWEB.eot')format('embedded-opentype');
+	src:	url('QualcommNext-ThinItalicWEB.woff')format('woff'),
+			url('QualcommNext-ThinItalicWEB.woff2')format('woff2'),
+			url('QualcommNext-ThinItalicWEB.svg')format('svg');
+	font-weight: 100;
+	font-style: italic;
+}
+
+@font-face {
+	font-family:'Qualcomm Next';
+	src:	url('QualcommBoing-ThinWEB.eot')format('embedded-opentype');
+	src:	url('QualcommBoing-ThinWEB.woff')format('woff'),
+			url('QualcommBoing-ThinWEB.woff2')format('woff2'),
+			url('QualcommBoing-ThinWEB.svg')format('svg');
+	font-weight: 100;
+	font-style: normal;
+}
+
+@font-face {
+	font-family:'Qualcomm Next';
+	src: url('../OTF-23-June-8/QualcommNext-Regular.otf')format('opentype');
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family:'Qualcomm Next';
+	src:	url('QualcommNext-ItalicWEB.eot')format('embedded-opentype');
+	src:	url('QualcommNext-ItalicWEB.woff')format('woff'),
+			url('QualcommNext-ItalicWEB.woff2')format('woff2'),
+			url('QualcommNext-ItalicWEB.svg')format('svg');
+	font-weight: 400;
+	font-style: italic;
+}
+
+@font-face {
+	font-family:'Qualcomm Next';
+	src: url('../OTF-23-June-8/QualcommNext-Medium.otf')format('opentype');
+	font-weight: 500;
+	font-style: normal;
+}
+
+@font-face {
+	font-family:'Qualcomm Next';
+	src: url('../TTF-23-MARCH-18/QualcommNext-Medium.ttf')format('truetype');
+	src:	url('QualcommNext-MediumItalicWEB.eot')format('embedded-opentype');
+	src:	url('QualcommNext-MediumItalicWEB.woff')format('woff'),
+			url('QualcommNext-MediumItalicWEB.woff2')format('woff2'),
+			url('QualcommNext-MediumItalicWEB.svg')format('svg');
+	font-weight: 500;
+	font-style: italic;
+}
+

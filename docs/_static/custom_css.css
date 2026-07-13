@@ -1,0 +1,500 @@
+/*=============================================================================*/
+
+/*  Copyright (c) 2020-2021 Qualcomm Technologies, Inc.*/
+/*  All Rights Reserved.*/
+/*  Confidential and Proprietary - Qualcomm Technologies, Inc.*/
+
+/*=============================================================================*/
+
+@import url('https://fonts.googleapis.com/css?family=Roboto+Flex');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
+@import url('fonts/QualcommNextFont/WEB-23-MARCH-18/fonts.css');
+@import url('fonts/AlfabetFont/fonts.css');
+
+/* Display content in entire screen available*/
+.wy-nav-content {
+    max-width: 100% !important;
+    /* New Addition */
+    background: white;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+/* Center text in table headers*/
+.wy-table-responsive table th{
+    text-align: center !important;
+}
+
+.wy-table-responsive table td, .wy-table-responsive table th{
+    white-space: normal !important;
+}
+
+/* If a table overflows from screen, display a scroll bar*/
+.wy-table-responsive {
+    overflow: auto !important;
+}
+
+.rst-content .function dt{
+    display: block !important;
+    overflow: auto !important;
+    max-width: fit-content !important;
+}
+
+.rst-content .simple dt{
+    display: table !important;
+}
+
+.rst-content .type dt code.descname, .rst-content .class .member dt code.descname{
+    padding-left: 8px !important;
+}
+
+/*Workaround to remove injected name from "Doxyfile.in PREDEFINED" for unnamed unions in documentation*/
+.rst-content .class .union dt code.descname, .rst-content .class .union dd em{
+    display: none !important;
+}
+
+.rst-content .class .union dd div dt code.descname{
+    display: inline !important;
+}
+/*End of Workaround*/
+
+.rst-content .docutils.literal.notranslate, .rst-content .docutils.literal.notranslate span.pre{
+    background: none !important;
+    border: none !important;
+    color: black !important;
+    font-family: Courier, monospace !important;
+    font-size: 100% !important;
+}
+
+/*Define Colors*/
+
+.red {
+    color:red;
+}
+
+.green {
+    color:green;
+}
+
+/* BEGIN CES UPDATES. DO NOT CHANGE THE ORDER OF THESE ELEMENTS */
+
+:root {
+    --nav-color: #F5F6F7;                          /* Guideline: Background 3 */
+    --primary-color: #2A2AEA;                      /* Guideline: Qualcomm Blue */
+    --primary-text-color: rgba(0, 0, 0, 0.95);
+    --grey-text-color: #737373;
+    --warning-banner-color: #F5F032;               /* Guideline: Accent Yellow */
+    --warning-background-color: rgba(245, 240, 50, 0.12);
+    --white-svg-filter: invert(100%) sepia(100%) saturate(8%) hue-rotate(192deg) brightness(119%) contrast(119%);
+    --sidenav-text-color: rgba(0,0,0, 0.55);
+}
+
+.highlight > pre {
+    font-family: "Roboto Mono" !important;
+    background-color: #FBFCFC;
+}
+
+body {
+    font-family: "Roboto Flex";
+}
+
+/*
+ * Guideline: Alfabet is the required display font for headings (Qualcomm Next is retired
+ * for Core/Developer pages). Add Alfabet font files to _static/fonts/AlfabetFont/ and
+ * declare @font-face for "Alfabet" to activate it. Qualcomm Next is the fallback until then.
+ */
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Alfabet", "Qualcomm Next", sans-serif;
+    font-weight: 400;                /* Alfabet Regular per guidelines */
+}
+
+/* Guideline type scale (1440px screens): H1=54px, H2=42px, H3=36px, H4=28px, H5=24px, H6=20px */
+h1 { font-size: 54px; line-height: 110%; letter-spacing: 0.01em; }
+h2 { font-size: 42px; line-height: 110%; letter-spacing: 0.01em; }
+h3 { font-size: 36px; line-height: 110%; letter-spacing: 0.01em; }
+h4 { font-size: 28px; line-height: 120%; }
+h5 { font-size: 24px; line-height: 120%; }
+h6 { font-size: 20px; line-height: 120%; }
+
+h1 .highlighted, h2 .highlighted, h3 .highlighted {
+    font-weight: 400 !important;
+}
+
+div[role=main]{
+    color: var(--primary-text-color) !important;
+}
+
+.wy-side-nav-search .icon.icon-home {
+    color: var(--primary-color);
+}
+
+.wy-side-nav-search {
+    background-color: var(--nav-color);
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+.wy-side-nav-search input[type=text] {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    -webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
+div.version {
+    color: #929495 !important;
+    font-size: 14px;
+}
+
+.wy-side-scroll {
+    background-color: var(--nav-color);
+}
+
+.wy-side-scroll li > a {
+    color: var(--sidenav-text-color);
+}
+
+.wy-menu-vertical li.current>a, .wy-menu-vertical li.on a {
+    font-weight: normal;
+}
+
+.wy-menu-vertical li.toctree-l2 a {
+    color: var(--sidenav-text-color);
+}
+
+.wy-menu.wy-menu-vertical ul > li > a:hover {
+    color: var(--primary-color) !important;
+    background-color: #F0F0F0 !important;
+}
+
+.wy-side-scroll ul > li  ul *{
+    background-color: #E9ECEE !important;
+    border: #E9ECEE !important;
+}
+
+.wy-side-scroll a.current {
+    color: #FFFFFF !important;
+    background-color: var(--primary-color) !important;
+}
+
+a.current .toctree-expand {
+    background-color: var(--primary-color) !important;
+    color: #a3a3a3 !important;
+}
+
+.reference.internal.current:hover span {
+    background-color: initial !important;
+}
+
+.wy-breadcrumbs {
+    color: #ababab;
+}
+
+.wy-breadcrumbs a:visited {
+    color: inherit;
+}
+
+.wy-nav-content a.reference.internal, .wy-nav-content a.reference.internal:visited,
+.external.reference {
+    color: var(--primary-color);
+}
+
+ul.wy-breadcrumbs >li:not(:first-child) a {
+    color: var(--primary-text-color) !important;
+}
+
+ul.wy-breadcrumbs >li:not(:has(a)) {
+    color: var(--primary-text-color);
+}
+
+i.fa.fa-bars:before {
+    content: '';
+    background:url('lucide/menu.svg');
+    filter: var(--white-svg-filter);
+    background-size: cover;
+    display: inline-block;
+    width:24px;    /* Guideline: medium Lucide size = 24px */
+    height:24px;
+    vertical-align: -15%
+}
+
+.icon.icon-home:before {
+    content: '';
+    background:url('lucide/home.svg');
+    filter: invert(79%) sepia(5%) saturate(0%) hue-rotate(174deg) brightness(86%) contrast(92%);
+    background-size:cover;
+    display: inline-block;
+    width:20px;
+    height:20px;
+    vertical-align: -15%
+}
+
+.wy-side-nav-search .icon.icon-home:before {
+    filter: invert(29%) sepia(30%) saturate(5101%) hue-rotate(220deg) brightness(89%) contrast(95%);
+}
+
+.rst-content .admonition-title:before {
+    content: '';
+    background:url('lucide/alert-circle.svg');
+    filter: var(--white-svg-filter);
+    background-size:cover;
+    display: inline-block;
+    width:20px;
+    height:20px;
+    vertical-align: -15%
+}
+
+.fa.fa-arrow-circle-left:before {
+    content: '';
+    background:url('lucide/chevron-left.svg');
+    filter: var(--white-svg-filter);
+    background-size:cover;
+    display: inline-block;
+    width:20px;
+    height:20px;
+    vertical-align: -30%
+}
+
+.fa.fa-arrow-circle-right:before {
+    content: '';
+    background:url('lucide/chevron-right.svg');
+    filter: var(--white-svg-filter);
+    background-size:cover;
+    display: inline-block;
+    width:20px;
+    height:20px;
+    vertical-align: -30%
+}
+
+.btn.btn-neutral {
+    color: white !important;
+    background: var(--primary-color) !important;
+    border-radius: 4px;
+    padding: 8px 12px 8px 12px;
+    -webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+    border: none;
+
+}
+
+.btn.btn-neutral:hover {
+    background: #1E3BAE !important;
+}
+
+footer {
+    color: var(--grey-text-color) !important;
+    padding-bottom: min(50px, 5%);
+}
+
+footer > a {
+    color: var(--primary-color);
+}
+
+div.wy-nav-content {
+/*    height: 100vh;*/
+    padding: 2.45em 2.45em;
+}
+
+.wy-nav-side {
+    background: var(--nav-color);
+    border-right: 1px solid rgba(0,0,0,0.08) !important;
+}
+
+.admonition-title {
+    background: var(--primary-color) !important;   /* Guideline: Qualcomm Blue #2A2AEA */
+    font-weight: 560 !important;
+}
+.admonition.note {
+    background: #E8E8FD;                           /* Light tint of Qualcomm Blue */
+}
+
+.wy-menu-vertical li.toctree-l1.current>a {
+    border: none !important;
+}
+
+.toctree-expand {
+    color: var(--grey-text-color) !important;
+}
+
+.wy-menu-vertical li.current>a span.toctree-expand {
+
+}
+
+.toctree-expand:active {
+    background-color: var(--primary-color) !important;
+}
+
+.headerlink {
+    color: var(--primary-color) !important;
+}
+
+.admonition.warning {
+    background-color: var(--warning-background-color);
+}
+
+.admonition.warning .admonition-title {
+    background-color: var(--warning-banner-color) !important;
+    color: var(--primary-text-color) !important;
+}
+
+.rst-content .admonition.warning .admonition-title:before {
+    content: '';
+    background:url('lucide/alert-circle.svg');
+    filter: var(--primary-text-color);
+    background-size:cover;
+    display: inline-block;
+    width:20px;
+    height:20px;
+    vertical-align: -15%
+}
+
+
+/* Begin Mobile Styles */
+nav.wy-nav-top {
+    background-color: var(--primary-color);
+}
+
+.section#home P {
+    color: var(--grey-text-color);
+}
+
+/* Begin Customized Tools Table Styles */
+td > p {
+    text-align: left;
+}
+
+td > p:has(a) {
+    text-align: left;
+}
+
+.rst-content table.docutils td:first-child, .rst-content table.docutils th:first-child, .rst-content table.field-list td:first-child, .rst-content table.field-list th:first-child, .wy-table td:first-child, .wy-table th:first-child {
+    border-left-width: 1px;
+}
+
+/* =============================================================================
+ * Dark Mode — Guideline: developer/code-heavy pages must support dark mode via
+ * system preference. Dark backgrounds: #151516 (bg1), #202021 (bg2), #2A2A2B (bg3).
+ * Dark mode blues: #2849D2 (fills), #5E83E2 (text & outlines).
+ * ============================================================================= */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --nav-color: #202021;
+        --primary-color: #5E83E2;              /* Dark Mode Blue / Text & Outlines */
+        --primary-text-color: rgba(255, 255, 255, 0.95);
+        --sidenav-text-color: rgba(255, 255, 255, 0.55);
+        --grey-text-color: rgba(255, 255, 255, 0.55);
+        --warning-banner-color: #F5F032;
+        --warning-background-color: rgba(245, 240, 50, 0.10);
+        --white-svg-filter: none;
+    }
+
+    body {
+        background-color: #151516;
+        color: rgba(255, 255, 255, 0.95);
+    }
+
+    .wy-nav-content {
+        background: #151516 !important;
+        color: rgba(255, 255, 255, 0.95);
+    }
+
+    div[role=main] {
+        background: #151516;
+        color: rgba(255, 255, 255, 0.95) !important;
+    }
+
+    .wy-side-scroll,
+    .wy-nav-side,
+    .wy-side-nav-search {
+        background-color: #202021 !important;
+        border-right-color: rgba(255, 255, 255, 0.08) !important;
+    }
+
+    .wy-side-scroll li > a,
+    .wy-menu-vertical li.toctree-l2 a {
+        color: rgba(255, 255, 255, 0.55);
+    }
+
+    .wy-side-scroll ul > li ul * {
+        background-color: #2A2A2B !important;
+        border-color: #2A2A2B !important;
+    }
+
+    .wy-menu.wy-menu-vertical ul > li > a:hover {
+        background-color: #343436 !important;
+        color: #5E83E2 !important;
+    }
+
+    .wy-side-scroll a.current {
+        color: #FFFFFF !important;
+        background-color: #2849D2 !important;   /* Dark Mode Blue / Fills */
+    }
+
+    .wy-table-responsive table th {
+        background-color: #2A2A2B;
+        color: rgba(255, 255, 255, 0.95);
+    }
+
+    .wy-table-responsive table td {
+        background-color: #202021;
+        color: rgba(255, 255, 255, 0.95);
+        border-color: #343436;
+    }
+
+    .admonition-title {
+        background: #2849D2 !important;
+    }
+
+    .admonition.note {
+        background: #1a1a3a;
+    }
+
+    .admonition.warning {
+        background-color: rgba(245, 240, 50, 0.08);
+    }
+
+    .admonition.warning .admonition-title {
+        background-color: #8a7a00 !important;
+        color: rgba(255, 255, 255, 0.95) !important;
+    }
+
+    .highlight > pre {
+        background-color: #2A2A2B;
+        color: rgba(255, 255, 255, 0.95);
+    }
+
+    footer {
+        color: rgba(255, 255, 255, 0.55) !important;
+    }
+
+    .wy-breadcrumbs {
+        color: rgba(255, 255, 255, 0.55);
+    }
+
+    ul.wy-breadcrumbs > li:not(:first-child) a,
+    ul.wy-breadcrumbs > li:not(:has(a)) {
+        color: rgba(255, 255, 255, 0.95) !important;
+    }
+
+    .btn.btn-neutral {
+        background: #2849D2 !important;
+    }
+
+    .btn.btn-neutral:hover {
+        background: #5E83E2 !important;
+    }
+
+    nav.wy-nav-top {
+        background-color: #202021;
+    }
+
+    .icon.icon-home:before {
+        filter: invert(60%) sepia(30%) saturate(2000%) hue-rotate(200deg) brightness(110%) contrast(90%);
+    }
+
+    .wy-side-nav-search .icon.icon-home:before {
+        filter: invert(60%) sepia(30%) saturate(2000%) hue-rotate(200deg) brightness(110%) contrast(90%);
+    }
+}

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8"/>
+
+  <title data-rh="itemprop,lang" itemprop="name" lang="en">Developer | Qualcomm</title>
+  <meta name="viewport" data-rh="true" content="width=device-width, user-scalable=yes, initial-scale=1"/>
+  
+
+    
+        <meta name="content-page-ref" content="ovEAXjCR8Q8dF7hSLvSaIVPM_a9BjAnN9yJFF99KQWPWXI4ILvvD5S-jEZDsuWjRnmuWWl_PiDqTS8zA-qwgPQ"/>
+<script defer="defer" type="text/javascript" src="/.rum/@adobe/helix-rum-js@%5E2/dist/micro.js"></script>
+<link rel="stylesheet" href="/content/dam/qcomm-martech/style-sheets/colorPallette.css"/>
+    
+        <link rel="stylesheet" href="/content/dam/qcomm-martech/style-sheets/spacingDefinitions.css"/>
+    
+        <link rel="stylesheet" href="/content/dam/qcomm-martech/style-sheets/commonCTAStyles.css"/>
+    
+        <link rel="stylesheet" href="/content/dam/qcomm-martech/style-sheets/themeDefinitions.css"/>
+    
+        <link rel="stylesheet" href="/content/dam/qcomm-martech/style-sheets/rteColorPallete.css"/>
+    
+
+  
+    
+    <meta data-rh="true" name="title" content="Developer | Qualcomm"/>
+    
+  
+    <link data-rh="true" rel="canonical" href="https://www.qualcomm.com/developer"/>
+    
+    
+  
+    
+    <meta data-rh="true" name="twitter:title" content="Developer"/>
+    
+  
+    
+    
+    <meta data-rh="true" property="og:title" content="Developer"/>
+  
+    
+    
+    <meta data-rh="true" property="og:type" content="website"/>
+  
+    
+    
+    <meta data-rh="true" property="og:url" content="https://www.qualcomm.com/developer"/>
+  
+    
+    <meta data-rh="true" name="twitter:image" content="https://s7d1.scene7.com/is/image/dmqualcommprod/engineering-human-progress"/>
+    
+  
+    
+    <meta data-rh="true" name="twitter:card" content="photo"/>
+    
+  
+    
+    <meta data-rh="true" name="twitter:image:width" content="507"/>
+    
+  
+    
+    <meta data-rh="true" name="twitter:image:height" content="265"/>
+    
+  
+    
+    
+    <meta data-rh="true" property="og:image" content="https://s7d1.scene7.com/is/image/dmqualcommprod/engineering-human-progress"/>
+  
+  
+  
+  
+  
+    <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" type="text/javascript" async="" data-domain-script="33091090-ea72-45dd-9f1c-b3a98d577c98"></script>
+    <script>
+      window.otConsentCookie = decodeURIComponent((document.cookie.match(/^(?:.*;)?\s*OptanonConsent\s*=\s*([^;]+)(?:.*)?$/) || [, 'not-set'])[1]);
+      window.triggerTrackViewEvent = false;
+      window.trackView = function () {
+        if (window.triggerTrackView !== undefined) {
+          window.triggerTrackView();
+        } else {
+          window.triggerTrackViewEvent = true;
+        }
+      }
+      if (otConsentCookie != null && otConsentCookie.indexOf("groups=") > -1 && otConsentCookie.indexOf(",C0002:1") > -1) { //C0002:1 = opt-in, C0002:0 = opt-out
+        window.trackView();
+      }
+    </script>
+    <script>
+      !function (e, a, n, t) {
+        var i = e.head; if (i) {
+          if (a) return;
+          var o = e.createElement("style");
+          o.id = "alloy-prehiding", o.innerText = n, i.appendChild(o), setTimeout(function () { o.parentNode && o.parentNode.removeChild(o) }, t)
+        }
+      }
+        (document, document.location.href.indexOf("adobe_authoring_enabled") !== -1, "body { opacity: 0 !important }", 3000);
+    </script>
+    <script src="https://assets.adobedtm.com/7360c2888734/2e1ee653cda8/launch-38cacfd7afcd.min.js" async></script>
+    <!-- <script data-rh="true" type="text/javascript" src="https://tags.tiqcdn.com/utag/qualcomm/qualcomm-react/prod/utag.sync.js"></script> -->
+    <!-- <script type="text/javascript" src="https://tags.tiqcdn.com/utag/qualcomm/qualcomm-react/prod/utag.js"></script> -->
+  
+  <script src="https://cdn.bc0a.com/autopilot/f00000000302404/autopilot_sdk.js"></script>
+
+  
+  
+  <meta name="Environment" content="prod"/>
+  
+  <meta name="Techtopic Tags" content="none"/>
+  
+  <meta name="Promotion Tags" content="none"/>
+  <meta name="megamenu-endurl" content="/content/qcomm-martech/us/en/jcr:content/content/megamenu.model.megamenu.json"/>
+  <meta name="globalheader-endurl" content="/content/qcomm-martech/us/en/jcr:content/content/globalheader.model.globalheader.json"/>
+  <meta name="globalfooter-endurl" content="/content/qcomm-martech/us/en/jcr:content/content/globalfooter.model.globalfooter.json"/>
+  <meta name="commonconfiguration-endurl" content="/content/qcomm-martech/us/en/jcr:content/content/commonconfiguration.model.commonconfiguration.json"/>
+  <meta name="contentaccess" content="public"/>
+
+  
+  <meta name="template" content="qualcomm-spa-base-page-template"/>
+  
+
+  
+
+
+
+    
+
+
+<meta name="theme-color" content="#000000"/>
+    
+    
+    <link rel="icon" type="image/png" href="/etc.clientlibs/qcomm-martech/clientlibs/clientlib-react/resources/favicon/qualcomm/favicon.ico"/>
+
+    <link rel="apple-touch-icon" type="image/png" href="/etc.clientlibs/qcomm-martech/clientlibs/clientlib-react/resources/favicon/qualcomm/favicon.png"/>
+
+    
+
+    
+
+<link rel="manifest" href="/etc.clientlibs/qcomm-martech/clientlibs/clientlib-react/resources/manifest.json"/>
+    <link rel="stylesheet" href="https://static.cloud.coveo.com/atomic/v2/themes/coveo.css"/>
+
+
+<meta property="cq:pagemodel_root_url" content="/content/qcomm-martech/us/en.model.json"/>
+
+
+
+
+<meta property="cq:errorpages" content="/content/qcomm-martech/us/en/home/errorpages"/>
+
+
+
+
+
+
+
+
+  
+    
+    
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/etc.clientlibs/qcomm-martech/clientlibs/clientlib-react.lc-b2c5f6c72369b0370819a06d26faa4ae-lc.min.css" type="text/css">
+<link rel="stylesheet" href="/etc.clientlibs/qcomm-martech/clientlibs/clientlib-grid.lc-734c3be5856733b7752d20357b7572eb-lc.min.css" type="text/css">
+
+
+
+    
+
+
+  
+    <meta name="loginEndpointUrl" content="https://myid.qualcomm.com/api/v2/login?state="/>
+  
+    <meta name="logoutEndpointUrl" content="https://myid.qualcomm.com/api/v2/logout?targetUrl="/>
+  
+    <meta name="graphqlEndpointUrl" content="https://prdgraphql.www.qualcomm.com/graphql"/>
+  
+    <meta name="qidSessionId" content="QID_SESSION"/>
+  
+    <meta name="registerEndpointUrl" content="https://account.qualcomm.com/oauth2/default/v1/authorize?response_type=code&amp;client_id=0oapqzlzwbbhHElqH697&amp;redirect_uri=https://myid.qualcomm.com/api/v2/loggedIn&amp;scope=openid+profile+okta.myAccount.profile.manage+offline_access&amp;state=aHR0cHM6Ly93d3cucXVhbGNvbW0uY29tLw==&amp;reg=streamline&amp;mode=signup"/>
+  
+    <meta name="profileEndpointUrl" content="https://myid.qualcomm.com/api/v2/login?state=https://myaccount.qualcomm.com/profile"/>
+  
+
+  
+</head>
+
+<body class="page-base page basicpage brand-theme qualcomm dark-mode">
+  
+  
+    
+
+
+
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+<div id="spa-root"></div>
+
+    
+    
+    
+<script src="/etc.clientlibs/qcomm-martech/clientlibs/clientlib-react.lc-ab4fb21b86a94c95babec23361fb4700-lc.min.js" type="module"></script>
+
+
+
+    
+
+    
+
+
+
+
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+  
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0124f9a4ac5447b',t:'MTc3OTY4ODczMw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+</html>

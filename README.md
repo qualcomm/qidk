@@ -4,9 +4,11 @@
 
 Qualcomm® Innovators Development Kit (QIDK) provides sample applications to demonstrate the capability of Hardware Accelerators for AI, and Software AI stack.
 
+📖 **[QIDK Documentation](https://qualcomm.github.io/qidk)**
+
 This repository contains sample android applications, which are designed to use components from the following products:
 
-1. [Qualcomm AI Runtime (QAIRT)](https://softwarecenter.qualcomm.com/catalog/item/Qualcomm_AI_Runtime_SDK?osArch=X86&osType=Windows&version=2.46.0.260424)
+1. [Qualcomm AI Runtime (QAIRT)](https://softwarecenter.qualcomm.com/api/download/software/sdks/Qualcomm_AI_Runtime_Community/All/2.47.0.260601/v2.47.0.260601.zip)
    Includes Neural Processing SDK (SNPE) and AI Engine Direct (QNN)
 2. [AI Model Efficiency Tool Kit (AIMET)](https://github.com/quic/aimet)
 3. [AIMET Model Zoo](https://github.com/quic/aimet-model-zoo)
@@ -33,7 +35,7 @@ All QIDK deliverables are covered in this course in detail with hands-on lab ses
 
 Please note the change in steps to download AI SDK (Steps in QWA course will be modified later)
 Users need to follow below procedure do download AI SDK. 
-1. Download SDK from this link https://softwarecenter.qualcomm.com/catalog/item/Qualcomm_AI_Runtime_SDK?osArch=X86&osType=Windows&version=2.46.0.260424
+1. Download SDK from this link https://softwarecenter.qualcomm.com/api/download/software/sdks/Qualcomm_AI_Runtime_Community/All/2.47.0.260601/v2.47.0.260601.zip
 
 Or
 
