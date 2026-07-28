@@ -11,7 +11,7 @@ jobs:
   stale:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/stale@v10
+    - uses: actions/stale@v11
       with:
         stale-issue-message: 'This issue has been marked as stale due to 30 days of inactivity. To prevent automatic closure in 7 days, remove the stale label or add a comment. You can reopen a closed issue at any time.'
         stale-pr-message: 'This pull request has been marked as stale due to 30 days of inactivity. To prevent automatic closure in 7 days, remove the stale label or add a comment. You can reopen a closed pull request at any time.'
