@@ -313,3 +313,88 @@ Speech to Image
 
 **Android App Source Code**
   * https://github.com/quic/qidk/tree/master/Solutions/GenAI/speech_to_image/speech_to_image
+
+
+ASR-LLM-TTS
+~~~~~~~~~~~~
+
+**Description**
+  End-to-end voice AI pipeline that chains Automatic Speech Recognition,
+  a Large Language Model, and Text-to-Speech synthesis entirely on-device.
+  The user speaks a query; the app transcribes it with Whisper (ASR),
+  generates a response with LLaMA (LLM), and speaks the answer back with
+  MeloTTS (TTS) — all accelerated on the Snapdragon NPU via QAIRT GENIE APIs.
+
+**Device Compatibility**
+
+  .. list-table::
+     :header-rows: 1
+     :widths: 40 20 40
+
+     * - Device
+       - QAIRT Version
+       - OS
+     * - Snapdragon 8 Elite (V79)
+       - 2.45.0
+       - Android 15
+     * - Snapdragon 8 Elite Gen 5 (V81)
+       - 2.45.0
+       - Android 16
+
+**Models Used**
+
+  * Whisper – Automatic Speech Recognition (ASR)
+  * LLaMA 3.2-3B-Instruct – Large Language Model (LLM)
+  * MeloTTS – Text-to-Speech (TTS)
+
+**Model On-boarding**
+
+  * **ASR (Whisper):** Generate via `VoiceAI ASR Notebook <https://qpm.qualcomm.com/#/main/tools/details/VoiceAI_ASR>`_
+    or download from `Qualcomm AI Hub (Whisper) <https://aihub.qualcomm.com/models/whisper_small>`_
+  * **LLM (LLaMA):** Download optimized LLaMA 3.2-3B model from
+    `AI Hub LLM on Genie tutorial <https://github.com/quic/ai-hub-apps/tree/main/tutorials/llm_on_genie>`_
+    or generate via `QPM Notebook (LLaMA 3.2-3B IoT) <https://qpm.qualcomm.com/#/main/tools/details/Tutorial_for_Llama3p2_3B_Instruct_IoT>`_
+  * **TTS (MeloTTS):** Generate via `VoiceAI TTS Notebook <https://qpm.qualcomm.com/#/main/tools/details/VoiceAI_TTS>`_
+
+**Android App Source Code**
+  * https://github.com/quic/qidk/tree/master/GenAI-Solutions/ASR-LLM-TTS
+
+
+VLM – Vision-Language Model
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Description**
+  On-device Vision-Language Model (VLM) application that accepts an image
+  and a text question and streams a natural-language answer token-by-token.
+  The solution demonstrates a three-node Genie pipeline — image encoder,
+  text (LUT) encoder, and LLM decoder — running fully on the Hexagon DSP
+  via Qualcomm GENIE and QNN HTP APIs. Supports both image+text and
+  text-only conversation modes.
+
+**Device Compatibility**
+
+  .. list-table::
+     :header-rows: 1
+     :widths: 40 20 40
+
+     * - Device
+       - QAIRT Version
+       - OS
+     * - Snapdragon 8 Elite Gen 5 (V81)
+       - 2.45.0
+       - Android 16
+
+**Model Used**
+
+  * Qwen3-VL-4B-Instruct – Vision-Language Model (w4a16 quantized, QNN HTP)
+
+**Model On-boarding**
+
+  * Download the pre-compiled model bundle (``geniex_qairt-w4a16`` variant) from
+    `Qualcomm AI Hub – Qwen3-VL <https://aihub.qualcomm.com/mobile/models/qwen3_vl_4b_instruct>`_
+    (Quick Start → OS: Android → Target: Snapdragon 8 Elite Gen 5)
+  * The required QAIRT SDK version is embedded in ``metadata.json``
+    (``tool_versions.qairt``) inside the downloaded bundle
+
+**Android App Source Code**
+  * https://github.com/quic/qidk/tree/master/GenAI-Solutions/VLM

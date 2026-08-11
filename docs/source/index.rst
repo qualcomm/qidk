@@ -19,6 +19,7 @@ Welcome to the QIDK documentation portal.
    release-notes/qualcomm_ai_ecosystem
    release-notes/model_onboarding
    release-notes/solutions
+   blogs/index
    release-notes/community_solutions
    release-notes/tools
    release-notes/faq
